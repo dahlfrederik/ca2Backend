@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 //Uncomment the line below, to temporarily disable this test
-@Disabled
+//Disabled
 public class PersonFacadeTest {
 
     private static EntityManagerFactory emf;
@@ -40,9 +40,11 @@ public class PersonFacadeTest {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            //em.persist(new Person("Some txt", "More text"));
-           // em.persist(new Person("aaa", "bbb"));
+            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            em.persist(new Person("Josef", "Marc", "josef@glostrup.dk"));
+            em.persist(new Person("Frederik", "Dahl", "frederik@nørrebro.dk"));
+            em.persist(new Person("Thor", "Chris", "thor@frederiksberg.dk"));
+           
 
             em.getTransaction().commit();
         } finally {
@@ -55,10 +57,5 @@ public class PersonFacadeTest {
 //        Remove any data after each test was run
     }
 
-    // TODO: Delete or change this method 
-    @Test
-    public void testAFacadeMethod() {
-        assertEquals(2, facade.getRenameMeCount(), "Expects two rows in the database");
-    }
-
+ 
 }

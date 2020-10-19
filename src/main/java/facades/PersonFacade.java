@@ -35,16 +35,5 @@ public class PersonFacade {
         return emf.createEntityManager();
     }
     
-    //TODO Remove/Change this before use
-    public long getRenameMeCount(){
-        EntityManager em = emf.createEntityManager();
-        try{
-            long renameMeCount = (long)em.createQuery("SELECT COUNT(r) FROM Person p").getSingleResult();
-            return renameMeCount;
-        }finally{  
-            em.close();
-        }
-        
-    }
-
+ 
 }
