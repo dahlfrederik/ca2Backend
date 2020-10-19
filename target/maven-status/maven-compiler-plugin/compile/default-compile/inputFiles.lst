@@ -3,7 +3,10 @@
 /Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/entities/CityInfo.java
 /Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/rest/ApplicationConfig.java
 /Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/entities/Address.java
+/Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/dto/PersonsDTO.java
 /Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/entities/Phone.java
 /Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/entities/Hobby.java
 /Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/entities/Person.java
+/Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/dto/PersonDTO.java
 /Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/rest/RenameMeResource.java
+/Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/facades/IPersonFacade.java

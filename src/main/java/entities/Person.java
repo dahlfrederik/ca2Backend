@@ -2,11 +2,13 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -37,6 +39,9 @@ public class Person implements Serializable {
     
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private Phone phone;
+    
+    @ManyToMany(cascade = {CascadeType.PERSIST})
+    private HashSet<Hobby> hobby; 
 
     public Person(String firstName, String lastName, String email) {
         this.firstName = firstName;
@@ -47,6 +52,15 @@ public class Person implements Serializable {
     public Person() {
     }
 
+    public void setHobby(Hobby hobby) {
+        if (hobby != null) {
+            this.hobby = new HashSet<>();
+            hobby.addPerson(this);
+        } else {
+            this.hobby = null;
+        }
+    }
+    
     public void setPhone(Phone phone) {
         if (phone != null) {
             this.phone = phone;
@@ -71,6 +85,10 @@ public class Person implements Serializable {
     
     public Phone getPhone(){
         return phone;
+    }
+
+    public HashSet<Hobby> getHobby() {
+        return hobby;
     }
 
     public String getEmail() {

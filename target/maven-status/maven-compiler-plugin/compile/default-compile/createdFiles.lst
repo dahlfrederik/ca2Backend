@@ -1,9 +1,12 @@
-entities/Person.class
 entities/Hobby.class
 utils/EMF_Creator.class
+facades/IPersonFacade.class
+entities/Address.class
+dto/PersonDTO.class
+entities/CityInfo.class
+entities/Person.class
+dto/PersonsDTO.class
 rest/RenameMeResource.class
 entities/Phone.class
-entities/Address.class
 rest/ApplicationConfig.class
 facades/PersonFacade.class
-entities/CityInfo.class
