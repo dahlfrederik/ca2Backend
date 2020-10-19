@@ -22,4 +22,16 @@ public class Hobby implements Serializable {
     private String category;
     private String type;
 
+    public Hobby() {
+    }
+
+    public Hobby(String wikiLink, String category, String type) {
+        this.wikiLink = wikiLink;
+        this.category = category;
+        this.type = type;
+    }
+    
+    
 }
+
+

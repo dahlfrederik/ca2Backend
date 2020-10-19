@@ -24,4 +24,13 @@ public class CityInfo implements Serializable {
     private String zipCode;
     @Column(length=35)
     private String city;
+
+    public CityInfo() {
+    }
+
+    public CityInfo(String city) {
+        this.city = city;
+    }
+    
+    
 }
