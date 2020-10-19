@@ -1,5 +1,9 @@
-entities/RenameMe.class
-facades/FacadeExample.class
-utils/EMF_Creator.class
-rest/ApplicationConfig.class
-rest/RenameMeResource.class
+rest\RenameMeResource.class
+entities\Address.class
+entities\Hobby.class
+rest\ApplicationConfig.class
+facades\PersonFacade.class
+entities\Phone.class
+entities\Person.class
+utils\EMF_Creator.class
+entities\CityInfo.class
