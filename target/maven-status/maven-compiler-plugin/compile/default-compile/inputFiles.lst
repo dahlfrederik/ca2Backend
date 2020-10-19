@@ -1,9 +1,9 @@
-C:\Users\fuzzboltuzzen\Documents\NetBeansProjects12\ca2Backend\src\main\java\entities\Address.java
-C:\Users\fuzzboltuzzen\Documents\NetBeansProjects12\ca2Backend\src\main\java\utils\EMF_Creator.java
-C:\Users\fuzzboltuzzen\Documents\NetBeansProjects12\ca2Backend\src\main\java\entities\Hobby.java
-C:\Users\fuzzboltuzzen\Documents\NetBeansProjects12\ca2Backend\src\main\java\entities\Person.java
-C:\Users\fuzzboltuzzen\Documents\NetBeansProjects12\ca2Backend\src\main\java\entities\CityInfo.java
-C:\Users\fuzzboltuzzen\Documents\NetBeansProjects12\ca2Backend\src\main\java\facades\PersonFacade.java
-C:\Users\fuzzboltuzzen\Documents\NetBeansProjects12\ca2Backend\src\main\java\entities\Phone.java
-C:\Users\fuzzboltuzzen\Documents\NetBeansProjects12\ca2Backend\src\main\java\rest\ApplicationConfig.java
-C:\Users\fuzzboltuzzen\Documents\NetBeansProjects12\ca2Backend\src\main\java\rest\RenameMeResource.java
+/Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/utils/EMF_Creator.java
+/Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/facades/PersonFacade.java
+/Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/entities/CityInfo.java
+/Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/rest/ApplicationConfig.java
+/Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/entities/Address.java
+/Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/entities/Phone.java
+/Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/entities/Hobby.java
+/Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/entities/Person.java
+/Users/FrederikDahl/Dropbox/CPH Business/3 semester/3sem_week43/ca2Backend/src/main/java/rest/RenameMeResource.java
