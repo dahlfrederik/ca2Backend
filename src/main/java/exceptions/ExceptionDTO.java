@@ -7,14 +7,14 @@ package exceptions;
 
 /**
  *
- * @author Thor
+ * @author Frederik Dahl <cph-fd76@cphbusiness.dk>
  */
-public class ExceptionDTO{
+public class ExceptionDTO {
 
-  public ExceptionDTO(int code, String description){
-      this.code = code;
-      this.message = description;
-  }
-  private int code;
-  private String message;
+    public ExceptionDTO(int code, String description) {
+        this.code = code;
+        this.description = description;
+    }
+    private int code;
+    private String description;
 }

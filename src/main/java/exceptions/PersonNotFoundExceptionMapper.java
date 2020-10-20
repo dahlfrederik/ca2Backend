@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package exceptions;
+
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,13 +17,14 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 /**
- *
- * @author Thor
+ * 
+ * @author Frederik Dahl <cph-fd76@cphbusiness.dk>
  */
+
 @Provider
 public class PersonNotFoundExceptionMapper implements ExceptionMapper<PersonNotFoundException> 
 {
-    static Gson gson = new GsonBuilder().setPrettyPrinting().create();   
+    static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     @Override
     public Response toResponse(PersonNotFoundException ex) {
        Logger.getLogger(PersonNotFoundExceptionMapper.class.getName())
@@ -32,6 +35,5 @@ public class PersonNotFoundExceptionMapper implements ExceptionMapper<PersonNotF
                .entity(gson.toJson(err))
                .type(MediaType.APPLICATION_JSON)
                .build();
-	}
+    }
 }
-

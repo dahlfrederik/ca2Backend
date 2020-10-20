@@ -7,11 +7,11 @@ package exceptions;
 
 /**
  *
- * @author Thor
+ * @author Frederik Dahl <cph-fd76@cphbusiness.dk>
  */
 public class MissingInputException extends Exception {
-    public MissingInputException (String message) {
+
+    public MissingInputException(String message) {
         super(message);
     }
 }
-

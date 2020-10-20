@@ -43,16 +43,13 @@ public class EMF_Creator {
             System.out.println("CONNECTION_STR -->" + System.getenv("CONNECTION_STR"));
             String user = System.getenv("USER");
             String pw = System.getenv("PW");
-            String connection_str = System.getenv("CONNECTION_STR");
+            //String connection_str = System.getenv("CONNECTION_STR");
+            String connection_str = System.getenv("PERSON_CONNECTION_STR");
             Properties props = new Properties();
             props.setProperty("javax.persistence.jdbc.user", user);
             props.setProperty("javax.persistence.jdbc.password", pw);
             props.setProperty("javax.persistence.jdbc.url", connection_str);
             props.setProperty("javax.persistence.jdbc.driver", "com.mysql.cj.jdbc.Driver");
-            
-            //Sets the production log-level to show only potential problems
-            props.setProperty("eclipselink.logging.level","WARNING");
-            props.setProperty("eclipselink.logging.level.sql","WARNING");
             return Persistence.createEntityManagerFactory("pu", props);
         }
 

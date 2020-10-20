@@ -1,50 +1,36 @@
-
 package dto;
 
-/**
- * 
- * @author Frederik Dahl <cph-fd76@cphbusiness.dk>
- */
-
-
 import entities.Person;
-
 
 public class PersonDTO {
     private int id;
     private String fName;
     private String lName;
-    private int phoneNumber;
-    private String phoneDesc; 
+    private String phone;
     private String street;
-    private String addressInfo; 
-    private String hobby; 
+    private String zip; 
+    private String city; 
 
     public PersonDTO(Person p) {
         this.fName = p.getFirstName();
         this.lName = p.getLastName();
-        this.phoneNumber = p.getPhone().getNumber();
-        this.phoneDesc = p.getPhone().getDescription(); 
+        this.phone = p.getPhone();
         this.id = p.getId();
-        this.street = p.getAddress().getStreet();  
-        this.addressInfo = p.getAddress().getAdditionalInfo();  
-        this.hobby = p.getHobby().getHobbyName();    
+        this.street = p.getAddress().getStreet(); 
+        this.zip = p.getAddress().getZip();
+        this.city = p.getAddress().getCity();
     }
 
-    public PersonDTO(String fn,String ln, int phoneNumber) {
+    public PersonDTO(String fn,String ln, String phone) {
         this.fName = fn;
         this.lName = ln;
-        this.phoneNumber = phoneNumber;
+        this.phone = phone;
     }
 
     public PersonDTO() {}
 
     public int getId() {
         return id;
-    }
-
-    public String getHobbyName() {
-        return hobby;
     }
 
     public String getfName() {
@@ -65,5 +51,39 @@ public class PersonDTO {
 
     public void setlName(String lName) {
         this.lName = lName;
-    }    
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+    
+    
 }

@@ -3,32 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package facades;
 
 import dto.PersonDTO;
 import dto.PersonsDTO;
+import exceptions.MissingInputException;
+import exceptions.PersonNotFoundException;
 
 /**
- * 
+ *
  * @author Frederik Dahl <cph-fd76@cphbusiness.dk>
  */
 public interface IPersonFacade {
-    public PersonDTO addPerson(String fName, String lName, String phone, String street, String zip, String city);
 
-    public PersonDTO deletePerson(int id);
+    public PersonDTO addPerson(String fName, String lName, String phone, String street, String zip, String city) throws MissingInputException;
 
-    public PersonDTO getPerson(int id);
+    public PersonDTO deletePerson(int id) throws PersonNotFoundException;
+
+    public PersonDTO getPerson(int id) throws PersonNotFoundException;
 
     public PersonsDTO getAllPersons();
 
-    public PersonDTO editPerson(PersonDTO p);
-    
-    public PersonsDTO getPersonsByHobby(String hobby);
-    
-    public PersonsDTO getPersonsByCity(String city); 
-    
-    public int getAmountOfPersonsWithThisHobby(String hobby); 
-    
-        
+    public PersonDTO editPerson(PersonDTO p) throws PersonNotFoundException, MissingInputException;
 }
