@@ -2,7 +2,6 @@ package entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,8 +13,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
 
 @Entity
 @NamedQueries({
@@ -40,7 +38,7 @@ public class Person implements Serializable {
     @ManyToMany(mappedBy = "persons", cascade = CascadeType.PERSIST)
     List<Hobby> hobbies;
     
-    @OneToMany(mappedBy = "persons", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
     List<Phone> phones;
 
     public Person() {
@@ -82,17 +80,10 @@ public class Person implements Serializable {
         }
     }
     
-        public void addPhone(Phone phone) {
+    public void addPhone(Phone phone) {
+        this.phones.add(phone);
         if (phone != null) {
-            this.phones.add(phone);
-            phone.getPersons().add(this);
-        }
-    }
-
-    public void removePhone(Phone phone) {
-        if (phone != null) {
-            phones.remove(phone);
-            phone.getPersons().remove(this);
+            phone.setPerson(this);
         }
     }
 

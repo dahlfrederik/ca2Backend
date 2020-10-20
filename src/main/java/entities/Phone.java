@@ -17,19 +17,18 @@ public class Phone implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private int number;
-    private String desc;
+    private String description;
     
     @ManyToOne
-    private List<Person> persons;
-
-    public Phone() {
-    }
-
+    private Person person;
+    
     public Phone(int number, String desc) {
         this.number = number;
-        this.desc = desc;
-        this.persons = new ArrayList<>();
+        this.description = desc;
     } 
+    
+    public Phone() {
+    }
 
     public int getNumber() {
         return number;
@@ -40,23 +39,22 @@ public class Phone implements Serializable {
     }
 
     public String getDesc() {
-        return desc;
+        return description;
     }
 
     public void setDesc(String desc) {
-        this.desc = desc;
+        this.description = desc;
     }
 
-    public List<Person> getPersons() {
-        return persons;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPersons(List<Person> persons) {
-        this.persons = persons;
+    public void setPerson(Person person) {
+        this.person = person;
     }
-    
-    
-    
+
+        
     public Integer getId() {
         return id;
     }
