@@ -1,12 +1,8 @@
-entities/Hobby.class
-utils/EMF_Creator.class
-facades/IPersonFacade.class
-entities/Address.class
-dto/PersonDTO.class
-entities/CityInfo.class
 entities/Person.class
-dto/PersonsDTO.class
-rest/RenameMeResource.class
+exceptions/GenericExceptionMapper.class
+exceptions/PersonNotFoundException.class
+entities/Hobby.class
 entities/Phone.class
-rest/ApplicationConfig.class
+entities/Address.class
 facades/PersonFacade.class
+entities/CityInfo.class

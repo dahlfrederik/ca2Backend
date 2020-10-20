@@ -29,5 +29,6 @@ public interface IPersonFacade {
     public PersonsDTO getPersonsByCity(String city); 
     
     public int getAmountOfPersonsWithThisHobby(String hobby); 
+    
         
 }

@@ -44,6 +44,17 @@ public class Hobby implements Serializable {
             persons.add(person);
         }
     }
+
+    public String getHobbyName() {
+        return name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    
+    
     
 }
 

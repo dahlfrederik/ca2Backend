@@ -6,33 +6,35 @@ package dto;
  * @author Frederik Dahl <cph-fd76@cphbusiness.dk>
  */
 
-import entities.Address;
-import entities.Hobby;
+
 import entities.Person;
-import entities.Phone;
-import java.util.HashSet;
+
 
 public class PersonDTO {
     private int id;
     private String fName;
     private String lName;
-    private Phone phone;
-    private Address address;  
-    private HashSet<Hobby> hobby; 
+    private int phoneNumber;
+    private String phoneDesc; 
+    private String street;
+    private String addressInfo; 
+    private String hobby; 
 
     public PersonDTO(Person p) {
         this.fName = p.getFirstName();
         this.lName = p.getLastName();
-        this.phone = p.getPhone();
+        this.phoneNumber = p.getPhone().getNumber();
+        this.phoneDesc = p.getPhone().getDescription(); 
         this.id = p.getId();
-        this.address = p.getAddress(); 
-        this.hobby = p.getHobby(); 
+        this.street = p.getAddress().getStreet();  
+        this.addressInfo = p.getAddress().getAdditionalInfo();  
+        this.hobby = p.getHobby().getHobbyName();    
     }
 
-    public PersonDTO(String fn,String ln, Phone phone) {
+    public PersonDTO(String fn,String ln, int phoneNumber) {
         this.fName = fn;
         this.lName = ln;
-        this.phone = phone;
+        this.phoneNumber = phoneNumber;
     }
 
     public PersonDTO() {}
@@ -41,13 +43,9 @@ public class PersonDTO {
         return id;
     }
 
-    public HashSet<Hobby> getHobby() {
+    public String getHobbyName() {
         return hobby;
     }
-
-    public void setHobby(HashSet<Hobby> hobby) {
-        this.hobby = hobby;
-    }   
 
     public String getfName() {
         return fName;
@@ -67,25 +65,5 @@ public class PersonDTO {
 
     public void setlName(String lName) {
         this.lName = lName;
-    }
-
-    public Phone getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Phone phone) {
-        this.phone = phone;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-
-    
-    
+    }    
 }

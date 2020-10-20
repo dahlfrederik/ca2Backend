@@ -41,7 +41,7 @@ public class Person implements Serializable {
     private Phone phone;
     
     @ManyToMany(cascade = {CascadeType.PERSIST})
-    private HashSet<Hobby> hobby; 
+    private Hobby hobby; 
 
     public Person(String firstName, String lastName, String email) {
         this.firstName = firstName;
@@ -54,7 +54,7 @@ public class Person implements Serializable {
 
     public void setHobby(Hobby hobby) {
         if (hobby != null) {
-            this.hobby = new HashSet<>();
+            this.hobby = hobby;
             hobby.addPerson(this);
         } else {
             this.hobby = null;
@@ -87,7 +87,7 @@ public class Person implements Serializable {
         return phone;
     }
 
-    public HashSet<Hobby> getHobby() {
+    public Hobby getHobby() {
         return hobby;
     }
 
