@@ -76,8 +76,8 @@ public class PersonResourceTest {
         //Person(String firstName, String lastName, String phone, Date created, Date lastEdited) 
         p1 = new Person("Thor","Christensen", "45454545");
         p2 = new Person("Frederik","Dahl", "30303030");
-        a1 = new Address("Tagensvej 154", "2200","København NV"); 
-        a2 = new Address("Frederiksbergvej 1", "2000","Frederiksberg"); 
+        a1 = new Address("Tagensvej 154"); 
+        a2 = new Address("Frederiksbergvej 1"); 
         p1.setAddress(a1);
         p2.setAddress(a2);
         
@@ -123,7 +123,7 @@ public class PersonResourceTest {
     @Test
     public void addPerson(){
         
-        Address a3 = new Address("Glostrupvej", "2600","Glostrup"); 
+        Address a3 = new Address("Glostrupvej"); 
         p1.setAddress(a3);
         PersonDTO pDTO = new PersonDTO(p1); 
         

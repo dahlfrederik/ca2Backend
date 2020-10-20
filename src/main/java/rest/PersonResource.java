@@ -26,7 +26,7 @@ import javax.ws.rs.core.Response;
 //Todo Remove or change relevant parts before ACTUAL use
 @Path("person")
 public class PersonResource {
-    private static PersonDTO aPersonDTO = new PersonDTO("Josef", "Marc", "12345678"); 
+    private static PersonDTO aPersonDTO = new PersonDTO("Josef", "Marc", "12345678", "Træning"); 
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
 
@@ -67,7 +67,7 @@ public class PersonResource {
     @Consumes({MediaType.APPLICATION_JSON})
     public String addPerson(String person) throws MissingInputException {
         PersonDTO p = GSON.fromJson(person, PersonDTO.class);
-        PersonDTO pNew = pf.addPerson(p.getfName(), p.getlName(), p.getPhone(), p.getStreet(), p.getZip(), p.getCity());
+        PersonDTO pNew = pf.addPerson(p.getfName(), p.getlName(), p.getEmail(), p.getStreet());
         return GSON.toJson(pNew);
     }
     

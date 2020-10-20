@@ -1,25 +1,27 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 @Entity
 @NamedQueries({
-@NamedQuery(name = "Person.deleteAllRows", query = "DELETE from Person"),
-@NamedQuery(name = "Person.getAllRows", query = "SELECT p from Person p"),
-@NamedQuery(name = "Person.getPersonById", query = "SELECT p from Person p WHERE p.id LIKE :id"),
-@NamedQuery(name = "Person.GetAddress", query = "SELECT a FROM Address a WHERE a.street = :street AND a.zip = :zip AND a.city = :city")
+    @NamedQuery(name = "Person.deleteAllRows", query = "DELETE from Person"),
+    @NamedQuery(name = "Person.getAllRows", query = "SELECT p from Person p"),
+    @NamedQuery(name = "Person.getPersonById", query = "SELECT p from Person p WHERE p.id LIKE :id"),
+    @NamedQuery(name = "Person.GetAddress", query = "SELECT a FROM Address a WHERE a.street = :street")
 })
 public class Person implements Serializable {
 
@@ -27,26 +29,24 @@ public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String firstName; 
-    private String lastName; 
-    private String phone; 
-    @Temporal(TemporalType.DATE)
-    private Date created; 
-    @Temporal(TemporalType.DATE)
-    private Date lastEdited; 
-    @OneToOne(cascade=(CascadeType.PERSIST))
-    private Address address; 
-    
-    
+    private String firstName;
+    private String lastName;
+    private String email;
+
+    @OneToOne(cascade = (CascadeType.PERSIST))
+    private Address address;
+
+    @ManyToMany(mappedBy = "persons", cascade = CascadeType.PERSIST)
+    List<Hobby> hobbies;
+
     public Person() {
     }
 
-    public Person(String firstName, String lastName, String phone) {
+    public Person(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phone = phone;
-        this.created = new Date();
-        this.lastEdited = this.created;
+        this.email = email;
+        this.hobbies = new ArrayList<>();
     }
 
     public Address getAddress() {
@@ -61,7 +61,22 @@ public class Person implements Serializable {
             this.address = null;
         }
     }
-    
+
+    public void addHobby(Hobby hobby) {
+        if (hobby != null) {
+            this.hobbies.add(hobby);
+            hobby.getPersons().add(this);
+        }
+
+    }
+
+    public void removeHobby(Hobby hobby) {
+        if (hobby != null) {
+            hobbies.remove(hobby);
+            hobby.getPersons().remove(this);
+        }
+    }
+
     public int getId() {
         return id;
     }
@@ -69,8 +84,6 @@ public class Person implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    
-    
 
     public String getFirstName() {
         return firstName;
@@ -88,34 +101,12 @@ public class Person implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getLastEdited() {
-        return lastEdited;
-    }
-
-    public void setLastEdited() {
-        this.lastEdited = new Date();
-    }
-        
-    
-    
-    
-    
-
-   
 }

@@ -6,25 +6,23 @@ public class PersonDTO {
     private int id;
     private String fName;
     private String lName;
-    private String phone;
+    private String email;
     private String street;
-    private String zip; 
-    private String city; 
+    private String hobbyName;
 
     public PersonDTO(Person p) {
         this.fName = p.getFirstName();
         this.lName = p.getLastName();
-        this.phone = p.getPhone();
+        this.email = p.getEmail();
         this.id = p.getId();
         this.street = p.getAddress().getStreet(); 
-        this.zip = p.getAddress().getZip();
-        this.city = p.getAddress().getCity();
     }
 
-    public PersonDTO(String fn,String ln, String phone) {
+    public PersonDTO(String fn,String ln, String email, String hobbyName) {
         this.fName = fn;
         this.lName = ln;
-        this.phone = phone;
+        this.email = email;
+        this.hobbyName = hobbyName;
     }
 
     public PersonDTO() {}
@@ -33,6 +31,14 @@ public class PersonDTO {
         return id;
     }
 
+    public String getHobbyName() {
+        return hobbyName;
+    }
+
+    public void setHobbyName(String hobbyName) {
+        this.hobbyName = hobbyName;
+    }
+    
     public String getfName() {
         return fName;
     }
@@ -53,12 +59,12 @@ public class PersonDTO {
         this.lName = lName;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getStreet() {
@@ -69,21 +75,4 @@ public class PersonDTO {
         this.street = street;
     }
 
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-    
-    
 }

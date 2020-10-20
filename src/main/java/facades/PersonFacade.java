@@ -4,6 +4,7 @@ import entities.Person;
 import dto.PersonDTO;
 import dto.PersonsDTO;
 import entities.Address;
+import entities.Hobby;
 import exceptions.MissingInputException;
 import exceptions.PersonNotFoundException;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class PersonFacade implements IPersonFacade {
     }
 
     @Override
-    public PersonDTO addPerson(String fName, String lName, String phone, String street, String zip, String city) throws MissingInputException {
+    public PersonDTO addPerson(String fName, String lName, String phone, String street) throws MissingInputException {
         if ((fName.length() == 0) || (lName.length() == 0)) {
             throw new MissingInputException("First Name and/or Last Name is missing");
         }
@@ -57,13 +58,11 @@ public class PersonFacade implements IPersonFacade {
             em.getTransaction().begin();
             Query query = em.createNamedQuery("Person.GetAddress");
             query.setParameter("street", street);
-            query.setParameter("zip", zip);
-            query.setParameter("city", city);
             List<Address> addresses = query.getResultList();
             if (addresses.size() > 0) {
                 person.setAddress(addresses.get(0));
             } else {
-                person.setAddress(new Address(street, zip, city));
+                person.setAddress(new Address(street));
             }
             em.persist(person);
             em.getTransaction().commit();
@@ -122,7 +121,7 @@ public class PersonFacade implements IPersonFacade {
 
     @Override
     public PersonDTO editPerson(PersonDTO p) throws PersonNotFoundException, MissingInputException {
-        if ((p.getfName().length() == 0) || (p.getlName().length() == 0) || (p.getPhone().length() == 0) || (p.getStreet().length() == 0) || (p.getZip().length() == 0) || (p.getCity().length() == 0)) {
+        if ((p.getfName().length() == 0) || (p.getlName().length() == 0) || (p.getEmail().length() == 0) || (p.getStreet().length() == 0)) {
             throw new MissingInputException("First Name and/or Last Name is missing");
         }
         EntityManager em = getEntityManager();
@@ -136,11 +135,8 @@ public class PersonFacade implements IPersonFacade {
             } else {
                 person.setFirstName(p.getfName());
                 person.setLastName(p.getlName());
-                person.setPhone(p.getPhone());
-                person.setLastEdited();
+                person.setEmail(p.getEmail());
                 person.getAddress().setStreet(p.getStreet());
-                person.getAddress().setZip(p.getZip());
-                person.getAddress().setCity(p.getCity());
             }
             em.getTransaction().commit();
             return new PersonDTO(person);
@@ -157,10 +153,13 @@ public class PersonFacade implements IPersonFacade {
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
             Person p1 = new Person("Thor", "Christensen", "45454545");
             Person p2 = new Person("Frederik", "Dahl", "30303030");
-            Address a1 = new Address("Tagensvej 154", "2200","København NV"); 
-            Address a2 = new Address("Frederiksbergvej 1", "2000","Frederiksberg"); 
+            Address a1 = new Address("Tagensvej 154"); 
+            Address a2 = new Address("Frederiksbergvej 1");
+            Hobby h1 = new Hobby("Noget" ,"Bb.dk", "Bodybuilding", "Træning");
             p1.setAddress(a1);
+            p1.addHobby(h1);
             p2.setAddress(a2);
+            p2.addHobby(h1);
             em.persist(p1);
             em.persist(p2);
 

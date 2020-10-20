@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 //Uncomment the line below, to temporarily disable this test
-@Disabled
+
 public class PersonFacadeTest {
 
     private static EntityManagerFactory emf;
@@ -53,8 +53,8 @@ public class PersonFacadeTest {
         p1 = new Person("Thor","Christensen", "45454545");
         p2 = new Person("Frederik","Dahl", "30303030");
         p3 = new Person("Josef", "Marc", "12345678"); 
-        a1 = new Address("Tagensvej 154", "2200","København NV"); 
-        a2 = new Address("Frederiksbergvej 1", "2000","Frederiksberg"); 
+        a1 = new Address("Tagensvej 154"); 
+        a2 = new Address("Frederiksbergvej 1"); 
         p1.setAddress(a1);
         p2.setAddress(a2);
         
@@ -92,7 +92,7 @@ public class PersonFacadeTest {
     public void testAddPerson() throws MissingInputException{
         System.out.println("TESTING SIZE BEFORE TESTING ADD METHOD ....");
         assertEquals(2, facade.getAllPersons().getAll().size(), "Expects two rows in the database");
-        facade.addPerson("Josef", "Marc", "12345678","Glostrupvej", "2600","Glostrup"); 
+        facade.addPerson("Josef", "Marc", "12345678","Glostrupvej"); 
         System.out.println("TESTING SIZE AFTER ADD METHOD");
         assertEquals(3, facade.getAllPersons().getAll().size(), "Expects three rows in the database");
         
