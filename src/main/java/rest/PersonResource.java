@@ -26,7 +26,7 @@ import javax.ws.rs.core.Response;
 //Todo Remove or change relevant parts before ACTUAL use
 @Path("person")
 public class PersonResource {
-    private static PersonDTO aPersonDTO = new PersonDTO("Josef", "Marc", "12345678", "Træning"); 
+    private static PersonDTO aPersonDTO = new PersonDTO("Josef", "Marc", "12345678", "Træning", 123, "Hjem"); 
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
 

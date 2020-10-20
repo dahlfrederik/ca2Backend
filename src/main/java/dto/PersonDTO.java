@@ -9,6 +9,8 @@ public class PersonDTO {
     private String email;
     private String street;
     private String hobbyName;
+    private int phoneNumber;
+    private String phoneDesc;
 
     public PersonDTO(Person p) {
         this.fName = p.getFirstName();
@@ -18,11 +20,13 @@ public class PersonDTO {
         this.street = p.getAddress().getStreet(); 
     }
 
-    public PersonDTO(String fn,String ln, String email, String hobbyName) {
+    public PersonDTO(String fn,String ln, String email, String hobbyName, int phoneNumber, String phoneDesc) {
         this.fName = fn;
         this.lName = ln;
         this.email = email;
         this.hobbyName = hobbyName;
+        this.phoneNumber = phoneNumber;
+        this.phoneDesc = phoneDesc;
     }
 
     public PersonDTO() {}
@@ -30,6 +34,24 @@ public class PersonDTO {
     public int getId() {
         return id;
     }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhoneDesc() {
+        return phoneDesc;
+    }
+
+    public void setPhoneDesc(String phoneDesc) {
+        this.phoneDesc = phoneDesc;
+    }
+    
+    
 
     public String getHobbyName() {
         return hobbyName;

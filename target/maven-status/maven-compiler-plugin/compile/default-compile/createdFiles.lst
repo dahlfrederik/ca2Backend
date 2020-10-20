@@ -4,6 +4,7 @@ entities\Hobby.class
 exceptions\PersonNotFoundExceptionMapper.class
 facades\IPersonFacade.class
 cors\CorsFilter.class
+entities\Phone.class
 rest\PersonResource.class
 exceptions\MissingInputException.class
 rest\TestResource.class

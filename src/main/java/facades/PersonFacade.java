@@ -5,6 +5,7 @@ import dto.PersonDTO;
 import dto.PersonsDTO;
 import entities.Address;
 import entities.Hobby;
+import entities.Phone;
 import exceptions.MissingInputException;
 import exceptions.PersonNotFoundException;
 import java.util.ArrayList;
@@ -155,11 +156,15 @@ public class PersonFacade implements IPersonFacade {
             Person p2 = new Person("Frederik", "Dahl", "30303030");
             Address a1 = new Address("Tagensvej 154"); 
             Address a2 = new Address("Frederiksbergvej 1");
+            Phone phone1 = new Phone(30303030, "Hjem");
+            Phone phone2 = new Phone(40404040, "Hjem");
             Hobby h1 = new Hobby("Noget" ,"Bb.dk", "Bodybuilding", "Træning");
             p1.setAddress(a1);
             p1.addHobby(h1);
             p2.setAddress(a2);
             p2.addHobby(h1);
+            p1.addPhone(phone1);
+            p2.addPhone(phone2);
             em.persist(p1);
             em.persist(p2);
 
