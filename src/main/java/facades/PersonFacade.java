@@ -165,8 +165,8 @@ public class PersonFacade implements IPersonFacade {
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
-            Person p1 = new Person("Thor", "Christensen", "45454545");
-            Person p2 = new Person("Frederik", "Dahl", "30303030");
+            Person p1 = new Person("Thor", "Christensen", "thor@hammer.dk");
+            Person p2 = new Person("Frederik", "Dahl", "freddy@wong.dk");
             Address a1 = new Address("Tagensvej 154"); 
             Address a2 = new Address("Frederiksbergvej 1");
             Phone phone1 = new Phone(30303030, "Hjem");
