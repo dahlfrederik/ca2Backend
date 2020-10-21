@@ -48,17 +48,33 @@ public class PersonFacade implements IPersonFacade {
         return emf.createEntityManager();
     }
 
+    /** 
+     * @param fName
+     * @param lName
+     * @param email
+     * @param phoneNumber
+     * @param phoneDesc
+     * @param street
+     * @param hobbyName
+     * @param city
+     * @param zip
+     * @return a DTO Object of the created person 
+     * @throws MissingInputException 
+     * HOBBIES CAN NEVER BE ZERO SINCE IT'S PREDEFINED IN DB, THEREFORE NO OTHER PART OF IF 
+     */
     @Override
-    public PersonDTO addPerson(String fName,
-            String lName,
-            String email,
-            String phoneNumber,
-            String phoneDesc,
-            String street,
-            String wikiLink,
-            String hobbyType,
-            String hobbyCategory) throws MissingInputException {
-        if ((fName.length() == 0) || (lName.length() == 0)) {
+    public PersonDTO addPerson(
+            String fName, 
+            String lName, 
+            String email, 
+            int phoneNumber, 
+            String phoneDesc, 
+            String street, 
+            String hobbyName,
+            String city, 
+            int zip
+            ) throws MissingInputException {
+        if ((fName.length() == 0) || (lName.length() == 0 || (email.length() == 0)) || (phoneNumber == 0)) {
             throw new MissingInputException("First Name and/or Last Name is missing");
         }
         EntityManager em = getEntityManager();
@@ -68,11 +84,30 @@ public class PersonFacade implements IPersonFacade {
             em.getTransaction().begin();
             Query query = em.createNamedQuery("Person.GetAddress");
             query.setParameter("street", street);
+            Query query2 = em.createNamedQuery("Person.GetHobby"); 
+            query2.setParameter("hobby", hobbyName);
+            Query query3 = em.createNamedQuery("Person.GetPhone"); 
+            query3.setParameter("phone", phoneNumber);
+            Query query4 = em.createNamedQuery("Person.GetCityInfo"); 
+            query4.setParameter("zip", zip);
             List<Address> addresses = query.getResultList();
-            if (addresses.size() > 0) {
-                person.setAddress(addresses.get(0));
+            List<Hobby> hobbies = query2.getResultList();
+            List<Phone> phoneNumberList = query3.getResultList(); 
+            List<CityInfo> cityInfoList = query4.getResultList(); 
+            if (addresses.size() > 0 && hobbies.size() > 0 && phoneNumberList.size() > 0 && cityInfoList.size() > 0) {
+                Address address = addresses.get(0);
+                address.setCityInfo(cityInfoList.get(0));
+                person.setAddress(address);
+                person.addHobby(hobbies.get(0)); 
+                person.addPhone(phoneNumberList.get(0));
             } else {
-                person.setAddress(new Address(street));
+                Address address = new Address(street); 
+                CityInfo cityInfo = cityInfoList.get(0); 
+                address.setCityInfo(cityInfo);
+                person.setAddress(address);
+                person.addPhone(new Phone(phoneNumber, phoneDesc));
+                person.addHobby(hobbies.get(0));
+                
             }
             em.persist(person);
             em.getTransaction().commit();
@@ -173,7 +208,7 @@ public class PersonFacade implements IPersonFacade {
             Phone phone2 = new Phone(40404040, "Hjem");
             CityInfo ci1 = new CityInfo(4200, "Slagelse");
             CityInfo ci2 = new CityInfo(2000, "Frederiksberg");
-            Hobby h1 = new Hobby("Noget" ,"Bb.dk", "Bodybuilding", "Træning");
+            Hobby h1 = new Hobby("Bodybuilding" ,"Bb.dk", "Bodybuilding", "Træning");
             a1.setCityInfo(ci1);
             a2.setCityInfo(ci2);
             p1.setAddress(a1);
@@ -192,9 +227,22 @@ public class PersonFacade implements IPersonFacade {
     }
 
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MissingInputException {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
         PersonFacade facade = PersonFacade.getFacadeExample(emf);
         facade.populateDB();
+        String fName = "Josef";
+        String lName = "Marc";
+        String email = "josef@glostrup.dk";
+        int phoneNumber = 12345678; 
+        String phoneDesc = "work";
+        String street = "Jernbanevej";
+        String city = "Glostrup"; 
+        String hobbyName = "Bodybulding";
+        //ZIP is already in DB thats why "2000" is being used. 
+        facade.addPerson(fName, lName, email, phoneNumber, phoneDesc, street, hobbyName,city, 2000);  
+        
     }
+
+   
 }

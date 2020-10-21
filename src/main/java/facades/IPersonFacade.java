@@ -21,12 +21,12 @@ public interface IPersonFacade {
             String fName,
             String lName,
             String email,
-            String phoneNumber,
+            int phoneNumber,
             String phoneDesc,
             String street,
-            String wikiLink,
-            String hobbyType,
-            String hobbyCategory
+            String hobbyName,
+            String city, 
+            int zip
     ) throws MissingInputException;
 
     public PersonDTO deletePerson(int id) throws PersonNotFoundException;

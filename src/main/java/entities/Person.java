@@ -20,7 +20,10 @@ import javax.persistence.OneToOne;
     @NamedQuery(name = "Person.deleteAllRows", query = "DELETE from Person"),
     @NamedQuery(name = "Person.getAllRows", query = "SELECT p from Person p"),
     @NamedQuery(name = "Person.getPersonById", query = "SELECT p from Person p WHERE p.id LIKE :id"),
-    @NamedQuery(name = "Person.GetAddress", query = "SELECT a FROM Address a WHERE a.street = :street")
+    @NamedQuery(name = "Person.GetAddress", query = "SELECT a FROM Address a WHERE a.street = :street"),
+    @NamedQuery(name = "Person.GetHobby", query = "SELECT h FROM Hobby h WHERE h.name = :hobby"),
+    @NamedQuery(name = "Person.GetPhone", query = "SELECT p FROM Phone p WHERE p.number = :phone"),
+    @NamedQuery(name = "Person.GetCityInfo", query = "SELECT c FROM CityInfo c WHERE c.zip = :zip")
 })
 public class Person implements Serializable {
 
@@ -35,10 +38,10 @@ public class Person implements Serializable {
     @OneToOne(cascade = (CascadeType.PERSIST))
     private Address address;
 
-    @ManyToMany(mappedBy = "persons", cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "persons", cascade = (CascadeType.ALL))
     List<Hobby> hobbies;
     
-    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "person", cascade = (CascadeType.ALL))
     List<Phone> phones;
 
     public Person() {
