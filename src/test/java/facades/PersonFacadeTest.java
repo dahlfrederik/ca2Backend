@@ -120,7 +120,7 @@ public class PersonFacadeTest {
             facade.deletePerson(id); 
             assertEquals(1, facade.getAllPersons().getAll().size(), "Expects one row in the database");
     }
-    
+    @Disabled
     @Test
     public void testDeletePersonNotFoundException() {
         Exception exception = assertThrows(PersonNotFoundException.class, () -> {

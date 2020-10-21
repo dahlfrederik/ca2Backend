@@ -6,6 +6,7 @@ facades\IPersonFacade.class
 cors\CorsFilter.class
 entities\Phone.class
 rest\PersonResource.class
+entities\CityInfo.class
 exceptions\MissingInputException.class
 rest\TestResource.class
 entities\Address.class
