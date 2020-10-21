@@ -113,6 +113,22 @@ public class PersonFacadeTest {
         assertEquals(3, facade.getAllPersons().getAll().size(), "Expects three rows in the database");
     }
     
+    @Test
+    public void testDeletePerson() throws PersonNotFoundException{
+            PersonsDTO result = facade.getAllPersons();
+            int id = result.getAll().get(0).getId(); 
+            facade.deletePerson(id); 
+            assertEquals(1, facade.getAllPersons().getAll().size(), "Expects one row in the database");
+    }
+    
+    @Test
+    public void testDeletePersonNotFoundException() {
+        Exception exception = assertThrows(PersonNotFoundException.class, () -> {
+            int id = 200; 
+            facade.deletePerson(id); 
+        });
+    }
+    
     
     @Disabled
     @Test
