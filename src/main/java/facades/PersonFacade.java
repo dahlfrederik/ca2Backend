@@ -191,12 +191,47 @@ public class PersonFacade implements IPersonFacade {
 
     @Override
     public PersonsDTO allPersonsByCity(String cityinfo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = getEntityManager();
+        try {
+            Query query = em.createNamedQuery("Person.GetCity");
+            query.setParameter("city", cityinfo);
+            CityInfo personCityInfo = (CityInfo) query.getSingleResult();
+            if (cityinfo == null) {
+                System.out.println("Fejl");
+            } else {
+
+                List<Address> addresses = personCityInfo.getAddressList();
+
+                List<Person> personList = new ArrayList();
+
+                for (int i = 0; i < addresses.size(); i++) {
+                    personList.add((Person) personCityInfo.getAddressList().get(i).getPerson());
+                }
+                return new PersonsDTO(personList);
+            }
+        } finally {
+            em.close();
+        }
+        return null;
     }
 
     @Override
     public CityInfo allZipCodes(String cityinfo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
+//        EntityManager em = getEntityManager();
+//        try {
+//            Query query = em.createNamedQuery("CityInfo.getAllRows");
+//            query.setParameter("c", cityinfo);
+//            CityInfo zipCityinfo = (CityInfo) query.getSingleResult();
+//            if (cityinfo == null) {
+//                System.out.println("Fejl");
+//            } else {
+//                return new CityInfo();
+//            }
+//        } finally {
+//            em.close();
+//        }
+//        return null;
     }
 
     @Override
@@ -265,6 +300,8 @@ public class PersonFacade implements IPersonFacade {
         System.out.println(facade.hobbyCount("Airsoft"));
 
         System.out.println(facade.allPersonsByHobby(hobby).getAll().get(0).getfName());
+        
+        System.out.println(facade.allPersonsByCity("Glostrup"));
 
     }
 

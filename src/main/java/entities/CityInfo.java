@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -17,10 +19,10 @@ public class CityInfo implements Serializable {
     @Id
     private int zip;
     private String city;
-    
+
     @OneToMany(mappedBy = "cityInfo", cascade = CascadeType.PERSIST)
-    private List<Address> addressList; 
-    
+    private List<Address> addressList;
+
     public CityInfo(int zip, String city) {
         this.zip = zip;
         this.city = city;
@@ -30,12 +32,13 @@ public class CityInfo implements Serializable {
     public CityInfo() {
     }
 
-     public void addAddress(Address address) {
+    public void addAddress(Address address) {
         this.addressList.add(address);
-        if(address != null){
+        if (address != null) {
             address.setCityInfo(this);
         }
     }
+
     public List<Address> getAddressList() {
         return addressList;
     }
@@ -43,7 +46,7 @@ public class CityInfo implements Serializable {
     public void setAddressList(List<Address> addressList) {
         this.addressList = addressList;
     }
-    
+
     public int getZip() {
         return zip;
     }
@@ -59,5 +62,5 @@ public class CityInfo implements Serializable {
     public void setCity(String city) {
         this.city = city;
     }
-    
+
 }

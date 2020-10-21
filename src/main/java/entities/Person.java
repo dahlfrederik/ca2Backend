@@ -23,7 +23,8 @@ import javax.persistence.OneToOne;
     @NamedQuery(name = "Person.GetAddress", query = "SELECT a FROM Address a WHERE a.street = :street"),
     @NamedQuery(name = "Person.GetHobby", query = "SELECT h FROM Hobby h WHERE h.name = :hobby"),
     @NamedQuery(name = "Person.GetPhone", query = "SELECT p FROM Phone p WHERE p.number = :phone"),
-    @NamedQuery(name = "Person.GetCityInfo", query = "SELECT c FROM CityInfo c WHERE c.zip = :zip")
+    @NamedQuery(name = "Person.GetCityInfo", query = "SELECT c FROM CityInfo c WHERE c.zip = :zip"),
+    @NamedQuery(name = "Person.GetCity", query = "SELECT c FROM CityInfo c WHERE c.city = :city")
 })
 public class Person implements Serializable {
 
