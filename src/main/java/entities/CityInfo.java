@@ -15,8 +15,6 @@ public class CityInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
     private int zip;
     private String city;
     
@@ -62,13 +60,4 @@ public class CityInfo implements Serializable {
         this.city = city;
     }
     
-    
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-   
 }

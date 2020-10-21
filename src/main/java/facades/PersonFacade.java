@@ -71,7 +71,6 @@ public class PersonFacade implements IPersonFacade {
             String phoneDesc,
             String street,
             String hobbyName,
-            String city,
             int zip
     ) throws MissingInputException {
         if ((fName.length() == 0) || (lName.length() == 0 || (email.length() == 0)) || (phoneNumber == 0)) {
@@ -91,23 +90,21 @@ public class PersonFacade implements IPersonFacade {
             Query query4 = em.createNamedQuery("Person.GetCityInfo");
             query4.setParameter("zip", zip);
             List<Address> addresses = query.getResultList();
-            List<Hobby> hobbies = query2.getResultList();
+            Hobby hobby = (Hobby) query2.getSingleResult();
             List<Phone> phoneNumberList = query3.getResultList();
-            List<CityInfo> cityInfoList = query4.getResultList();
-            if (addresses.size() > 0 && hobbies.size() > 0 && phoneNumberList.size() > 0 && cityInfoList.size() > 0) {
+            CityInfo cityInfoList = (CityInfo) query4.getSingleResult();
+            if (addresses.size() > 0 && hobby == null && phoneNumberList.size() > 0 && cityInfoList == null) {
                 Address address = addresses.get(0);
-                address.setCityInfo(cityInfoList.get(0));
+                address.setCityInfo(cityInfoList);
                 person.setAddress(address);
-                person.addHobby(hobbies.get(0));
+                person.addHobby(hobby);
                 person.addPhone(phoneNumberList.get(0));
             } else {
                 Address address = new Address(street);
-                CityInfo cityInfo = cityInfoList.get(0);
-                address.setCityInfo(cityInfo);
+                address.setCityInfo(cityInfoList);
                 person.setAddress(address);
                 person.addPhone(new Phone(phoneNumber, phoneDesc));
-                person.addHobby(hobbies.get(0));
-
+                person.addHobby(hobby);
             }
             em.persist(person);
             em.getTransaction().commit();
@@ -179,11 +176,13 @@ public class PersonFacade implements IPersonFacade {
     public PersonsDTO allPersonsByHobby(String hobby) throws PersonNotFoundException {
         EntityManager em = getEntityManager();
         try {
-            Person person = em.find(Person.class, hobby);
-            if (person == null) {
+            Query query = em.createNamedQuery("Person.GetHobby");
+            query.setParameter("hobby", hobby);
+            Hobby personHobby = (Hobby) query.getSingleResult();
+            if (personHobby == null) {
                 throw new PersonNotFoundException(String.format("Persons with hobby: (%d) not found", hobby));
             } else {
-                return new PersonsDTO(em.createNamedQuery("Person.getAllRows").getResultList());
+                return new PersonsDTO(personHobby.getPersons());
             }
         } finally {
             em.close();
@@ -201,8 +200,14 @@ public class PersonFacade implements IPersonFacade {
     }
 
     @Override
-    public PersonsDTO hobbyCount(String hobby) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public long hobbyCount(String hobby) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            long hobbyCount = (long) em.createQuery("SELECT COUNT(h) FROM Hobby h").getSingleResult();
+            return hobbyCount;
+        } finally {
+            em.close();
+        }
     }
 
     public void populateDB() {
@@ -239,7 +244,8 @@ public class PersonFacade implements IPersonFacade {
     public static void main(String[] args) throws MissingInputException, PersonNotFoundException {
         emf = EMF_Creator.createEntityManagerFactory();
         PersonFacade facade = PersonFacade.getFacadeExample(emf);
-        facade.populateDB();
+        EntityManager em = emf.createEntityManager();
+        //facade.populateDB();
         String fName = "Josef";
         String lName = "Marc";
         String email = "josef@glostrup.dk";
@@ -247,12 +253,19 @@ public class PersonFacade implements IPersonFacade {
         String phoneDesc = "work";
         String street = "Jernbanevej";
         String city = "Glostrup";
-        String hobbyName = "Bodybuilding";
+        String hobbyName = "Airsoft";
         //ZIP is already in DB thats why "2000" is being used. 
-        //facade.addPerson(fName, lName, email, phoneNumber, phoneDesc, street, hobbyName, city, 2000);
-        
-        facade.allPersonsByHobby(hobbyName);
-        
+        facade.addPerson(fName, lName, email, phoneNumber, phoneDesc, street, hobbyName, 2000);
+
+        String hobby = "Airsoft";
+
+        System.out.println("-----------------TESTER HER ------------------------");
+        //System.out.println(PersonsWithHobby); 
+
+        System.out.println(facade.hobbyCount("Airsoft"));
+
+        System.out.println(facade.allPersonsByHobby(hobby).getAll().get(0).getfName());
+
     }
 
 }

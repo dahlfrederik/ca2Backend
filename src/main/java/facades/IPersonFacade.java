@@ -25,7 +25,6 @@ public interface IPersonFacade {
             String phoneDesc,
             String street,
             String hobbyName,
-            String city, 
             int zip
     ) throws MissingInputException;
 
@@ -41,7 +40,7 @@ public interface IPersonFacade {
     
     public CityInfo allZipCodes(String cityinfo); 
     
-    public PersonsDTO hobbyCount(String hobby);
+    public long hobbyCount(String hobby);
     
     
 }
