@@ -41,42 +41,30 @@ public class PersonResource {
         return "{\"msg\":\"Hello World\"}";
     }
     
-    
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Path("all")
     public String allPersons() {      
             PersonsDTO personsDTO = pf.getAllPersons();
-            return GSON.toJson(personsDTO);
-        
+            return GSON.toJson(personsDTO);    
     }
 
-    @GET
-    @Path("id/{id}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public String getPersonById(@PathParam("id") int id) throws PersonNotFoundException {    
-            PersonFacade mf = PersonFacade.getFacadeExample(EMF);
-            PersonDTO personDTO = pf.getPerson(id);
-            return GSON.toJson(personDTO);
-        
-    }
 
-    @POST
-    @Produces({MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_JSON})
-    public String addPerson(String person) throws MissingInputException {
-        PersonDTO p = GSON.fromJson(person, PersonDTO.class);
-        PersonDTO pNew = pf.addPerson(p.getfName(), p.getlName(), p.getEmail(), p.getStreet());
-        return GSON.toJson(pNew);
-    }
+//    @POST
+//    @Produces({MediaType.APPLICATION_JSON})
+//    @Consumes({MediaType.APPLICATION_JSON})
+//    public String addPerson(String person) throws MissingInputException {
+//        PersonDTO p = GSON.fromJson(person, PersonDTO.class);
+//        PersonDTO pNew = pf.addPerson(p.getfName(), p.getlName(), p.getEmail(), p.getStreet());
+//        return GSON.toJson(pNew);
+//    }
     
     @DELETE
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public String deletePerson(@PathParam("id") int id) throws PersonNotFoundException{
         PersonDTO pd = pf.deletePerson(id);
-        
         return "Deleted: " + GSON.toJson(pd);
     }
     

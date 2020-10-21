@@ -49,12 +49,20 @@ public class PersonFacade implements IPersonFacade {
     }
 
     @Override
-    public PersonDTO addPerson(String fName, String lName, String phone, String street) throws MissingInputException {
+    public PersonDTO addPerson(String fName,
+            String lName,
+            String email,
+            String phoneNumber,
+            String phoneDesc,
+            String street,
+            String wikiLink,
+            String hobbyType,
+            String hobbyCategory) throws MissingInputException {
         if ((fName.length() == 0) || (lName.length() == 0)) {
             throw new MissingInputException("First Name and/or Last Name is missing");
         }
         EntityManager em = getEntityManager();
-        Person person = new Person(fName, lName, phone);
+        Person person = new Person(fName, lName, email);
 
         try {
             em.getTransaction().begin();
@@ -96,22 +104,6 @@ public class PersonFacade implements IPersonFacade {
     }
 
     @Override
-    public PersonDTO getPerson(int id) throws PersonNotFoundException {
-        EntityManager em = emf.createEntityManager();
-        try {
-            Person person = em.find(Person.class, id);
-            if (person == null) {
-                throw new PersonNotFoundException(String.format("Person with id: (%d) not found, try something else", id));
-            } else {
-                PersonDTO personDTO = new PersonDTO(person);
-                return personDTO;
-            }
-        } finally {
-            em.close();
-        }
-    }
-
-    @Override
     public PersonsDTO getAllPersons() {
       EntityManager em = getEntityManager();
         try {
@@ -146,6 +138,26 @@ public class PersonFacade implements IPersonFacade {
             em.close();
         }
 
+    }
+    
+    @Override
+    public PersonsDTO allPersonsByHobby(String hobby) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public PersonsDTO allPersonsByCity(String cityinfo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public CityInfo allZipCodes(String cityinfo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public PersonsDTO hobbyCount(String hobby) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void populateDB() {

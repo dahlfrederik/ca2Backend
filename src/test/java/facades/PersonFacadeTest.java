@@ -80,23 +80,16 @@ public class PersonFacadeTest {
     public void testGetAllPersons() {        
         PersonsDTO result  = facade.getAllPersons(); 
         assertEquals(2, result.getAll().size(), "Expects two rows in the database");
-    }
-    
-    @Test
-    public void testGetPerson() throws PersonNotFoundException {
-        PersonDTO person = facade.getPerson(p1.getId());
-        assertEquals("Thor", person.getfName(), "Expects to find Thor");
-    }
+    }   
 
-    @Test
-    public void testAddPerson() throws MissingInputException{
-        System.out.println("TESTING SIZE BEFORE TESTING ADD METHOD ....");
-        assertEquals(2, facade.getAllPersons().getAll().size(), "Expects two rows in the database");
-        facade.addPerson("Josef", "Marc", "12345678","Glostrupvej"); 
-        System.out.println("TESTING SIZE AFTER ADD METHOD");
-        assertEquals(3, facade.getAllPersons().getAll().size(), "Expects three rows in the database");
-        
-    }
+//    @Test
+//    public void testAddPerson() throws MissingInputException{
+//        System.out.println("TESTING SIZE BEFORE TESTING ADD METHOD ....");
+//        assertEquals(2, facade.getAllPersons().getAll().size(), "Expects two rows in the database");
+//        facade.addPerson("Josef", "Marc", "12345678","Glostrupvej"); 
+//        System.out.println("TESTING SIZE AFTER ADD METHOD");
+//        assertEquals(3, facade.getAllPersons().getAll().size(), "Expects three rows in the database");
+//    }
     
    @Test
     public void testEditPerson() throws Exception {

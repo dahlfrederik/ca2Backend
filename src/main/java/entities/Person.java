@@ -87,6 +87,15 @@ public class Person implements Serializable {
         }
     }
 
+    public List<Hobby> getHobbies() {
+        return hobbies;
+    }
+
+    public List<Phone> getPhones() {
+        return phones;
+    }
+    
+
     public int getId() {
         return id;
     }
