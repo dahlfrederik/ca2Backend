@@ -59,20 +59,20 @@ public class PersonFacadeTest {
         Address a2 = new Address("Frederiksbergvej 1");
         Phone phone1 = new Phone(30303030, "Hjem");
         Phone phone2 = new Phone(40404040, "Hjem");
-        CityInfo ci1 = new CityInfo(4200, "Slagelse");
-        CityInfo ci2 = new CityInfo(2000, "Frederiksberg");
-        Hobby h1 = new Hobby("Bodybuilding", "Bb.dk", "Bodybuilding", "Træning");
+        
+       
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
-
-            a1.setCityInfo(ci1);
-            a2.setCityInfo(ci2);
+            
+            em.createQuery("INSERT INTO CITYINFO VALUES ('2000','Frederiksberg');").executeUpdate();
+            em.createQuery("INSERT INTO CITYINFO VALUES ('2100','København Ø');").executeUpdate();
+            em.createQuery("INSERT INTO HOBBY VALUES ('Akrobatik','https://en.wikipedia.org/wiki/Acrobatics','Generel','Indendørs');").executeUpdate(); 
+            em.createQuery("INSERT INTO HOBBY VALUES ('Skuespil','https://en.wikipedia.org/wiki/Acting','Generel','Indendørs');").executeUpdate(); 
+            
             p1.setAddress(a1);
-            p1.addHobby(h1);
             p2.setAddress(a2);
-            p2.addHobby(h1);
             p1.addPhone(phone1);
             p2.addPhone(phone2);
             em.persist(p1);
@@ -105,11 +105,10 @@ public class PersonFacadeTest {
         int phoneNumber = 12345678; 
         String phoneDesc = "work";
         String street = "Jernbanevej";
-        String city = "Frederiksberg";
-        String hobbyName = "Bodybuilding";
+        String hobbyName = "Akrobatik";
         int zip = 2000; 
         //ZIP is already in DB thats why "2000" is being used. 
-        facade.addPerson(fName, lName, email, phoneNumber, phoneDesc, street, hobbyName, city,zip);  
+        facade.addPerson(fName, lName, email, phoneNumber, phoneDesc, street, hobbyName, zip);  
         System.out.println("TESTING SIZE AFTER ADD METHOD");
         assertEquals(3, facade.getAllPersons().getAll().size(), "Expects three rows in the database");
     }
