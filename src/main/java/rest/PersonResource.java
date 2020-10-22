@@ -76,13 +76,13 @@ public class PersonResource {
 //    @GET
 //    @Produces({MediaType.APPLICATION_JSON})
 //    @Consumes({MediaType.APPLICATION_JSON})
-//    @Path("{city}")
-//    public String allPersonsByCity(@PathParam("city") String city) throws PersonNotFoundException {      
+//    @Path("persons/{zipCode}")
+//    public String allPersonsByZipcode(@PathParam("zipCode") int zipCode) throws PersonNotFoundException {      
 //        PersonsDTO personsDTO;
-//        personsDTO = pf.allPersonsByCity(city);
+//        personsDTO = pf.allPersonsByZipcode(zipCode);
 //            return GSON.toJson(personsDTO);    
 //    }
-    
+//    
     
 
 //    @POST

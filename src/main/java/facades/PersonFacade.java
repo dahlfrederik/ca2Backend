@@ -195,17 +195,20 @@ public class PersonFacade implements IPersonFacade {
         try {
             Query query = em.createNamedQuery("Person.GetCityInfo");
             query.setParameter("zip", zipcode);
-            CityInfo personCityInfo = (CityInfo) query.getResultList();
+            List<CityInfo> personCityInfo = query.getResultList();
 
             if (zipcode < 0) {
                 System.out.println("Fejl");
             } else {
-                List<Address> addresses = personCityInfo.getAddressList();
-                List<Person> personList = new ArrayList();
-                for (int i = 0; i < addresses.size(); i++) {
-                    personList.add((Person) personCityInfo.getAddressList().get(i).getPerson());
+                List<Address> addresses = new ArrayList();
+                List<Person> persons = new ArrayList();
+                for (CityInfo cityInfo : personCityInfo) {
+                    addresses = cityInfo.getAddressList();
+                    for (Address addresse : addresses) {
+                        persons = addresse.getPerson();
+                    }
                 }
-                return new PersonsDTO(personList);
+                return new PersonsDTO(persons);
             }
         } finally {
             em.close();
@@ -298,7 +301,7 @@ public class PersonFacade implements IPersonFacade {
         
 
         //System.out.println(facade.allPersonsByHobby(hobby).getAll().get(0).getfName());
-        //System.out.println(facade.allPersonsByZipcode(2000).getAll());
+        
     }
 
 }
