@@ -44,8 +44,6 @@ public class PersonResource {
             return GSON.toJson(personsDTO);    
     }
     
-
-    
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
