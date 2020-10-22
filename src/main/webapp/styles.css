@@ -56,11 +56,14 @@ button:hover {
 }
 
 h1, h2, h3, h4, h5{
+    font-family: "Montserrat", sans-serif;
     color: #fff;
-    font-weight: bold;
+    font-weight: 500;
 }
 
-p, li{
+p, li, th, td{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
     color: #fff;
 }
 
