@@ -44,12 +44,42 @@ public class PersonResource {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("all")
+    @Path("persons")
     public String allPersons() {      
             PersonsDTO personsDTO = pf.getAllPersons();
             return GSON.toJson(personsDTO);    
     }
-
+    
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("{hobby}")
+    public String allPersonsByHobby(@PathParam("hobby") String hobby) throws PersonNotFoundException {      
+        PersonsDTO personsDTO;
+        personsDTO = pf.allPersonsByHobby(hobby);
+            return GSON.toJson(personsDTO);    
+    }
+    
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("persons/{hobbyName}")
+    public String hobbyCount(@PathParam("hobbyName") String hobby) throws PersonNotFoundException {      
+        long hobbyCount = pf.hobbyCount(hobby);
+            return GSON.toJson(hobbyCount);    
+    }
+    
+//    @GET
+//    @Produces({MediaType.APPLICATION_JSON})
+//    @Consumes({MediaType.APPLICATION_JSON})
+//    @Path("{city}")
+//    public String allPersonsByCity(@PathParam("city") String city) throws PersonNotFoundException {      
+//        PersonsDTO personsDTO;
+//        personsDTO = pf.allPersonsByCity(city);
+//            return GSON.toJson(personsDTO);    
+//    }
+    
+    
 
 //    @POST
 //    @Produces({MediaType.APPLICATION_JSON})
@@ -91,5 +121,8 @@ public class PersonResource {
             return GSON.toJson(errorString);
         }
     }
+    
+    
+    
 
 }

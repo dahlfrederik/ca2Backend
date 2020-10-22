@@ -36,7 +36,7 @@ public interface IPersonFacade {
     
     public PersonsDTO allPersonsByHobby(String hobby) throws PersonNotFoundException; 
     
-    public PersonsDTO allPersonsByCity(String cityinfo);
+    public PersonsDTO allPersonsByZipcode(int zipcode);
     
     public CityInfo allZipCodes(String cityinfo); 
     

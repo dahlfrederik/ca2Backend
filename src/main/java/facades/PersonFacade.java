@@ -190,28 +190,25 @@ public class PersonFacade implements IPersonFacade {
     }
 
     @Override
-    public PersonsDTO allPersonsByCity(String cityinfo) {
-        EntityManager em = getEntityManager();
-        try {
-            Query query = em.createNamedQuery("Person.GetCity");
-            query.setParameter("city", cityinfo);
-            CityInfo personCityInfo = (CityInfo) query.getSingleResult();
-            if (cityinfo == null) {
-                System.out.println("Fejl");
-            } else {
-
-                List<Address> addresses = personCityInfo.getAddressList();
-
-                List<Person> personList = new ArrayList();
-
-                for (int i = 0; i < addresses.size(); i++) {
-                    personList.add((Person) personCityInfo.getAddressList().get(i).getPerson());
-                }
-                return new PersonsDTO(personList);
-            }
-        } finally {
-            em.close();
-        }
+    public PersonsDTO allPersonsByZipcode(int zipcode) {
+//        EntityManager em = getEntityManager();
+//        try {
+//            Query query = em.createNamedQuery("Person.GetCityInfo");
+//            query.setParameter("zip", zipcode);
+//            CityInfo personCityInfo = (CityInfo) query.getSingleResult();
+//            if (zipcode < 0) {
+//                System.out.println("Fejl");
+//            } else {
+//                List<Address> addresses = personCityInfo.getAddressList();
+//                List<Person> personList = new ArrayList();
+//                for (int i = 0; i < addresses.size(); i++) {
+//                    personList.add((Person) personCityInfo.getAddressList().get(i).getPerson());
+//                }
+//                return new PersonsDTO(personList);
+//            }
+//        } finally {
+//            em.close();
+//        }
         return null;
     }
 
@@ -237,8 +234,9 @@ public class PersonFacade implements IPersonFacade {
     @Override
     public long hobbyCount(String hobby) {
         EntityManager em = emf.createEntityManager();
+        String qouteString = "\"" + hobby + "\"";
         try {
-            long hobbyCount = (long) em.createQuery("SELECT COUNT(h) FROM Hobby h").getSingleResult();
+            long hobbyCount = (long) em.createQuery("SELECT COUNT(h) FROM Hobby h WHERE h.name = " + qouteString).getSingleResult();
             return hobbyCount;
         } finally {
             em.close();
@@ -299,9 +297,8 @@ public class PersonFacade implements IPersonFacade {
 
         System.out.println(facade.hobbyCount("Airsoft"));
 
-        System.out.println(facade.allPersonsByHobby(hobby).getAll().get(0).getfName());
-        
-        System.out.println(facade.allPersonsByCity("Glostrup"));
+        //System.out.println(facade.allPersonsByHobby(hobby).getAll().get(0).getfName());
+        //System.out.println(facade.allPersonsByZipcode(2000).getAll());
 
     }
 
