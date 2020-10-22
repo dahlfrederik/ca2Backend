@@ -245,36 +245,6 @@ public class PersonFacade implements IPersonFacade {
         }
     }
 
-    public void populateDB() {
-        EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
-            Person p1 = new Person("Thor", "Christensen", "thor@hammer.dk");
-            Person p2 = new Person("Frederik", "Dahl", "freddy@wong.dk");
-            Address a1 = new Address("Tagensvej 154");
-            Address a2 = new Address("Frederiksbergvej 1");
-            Phone phone1 = new Phone(30303030, "Hjem");
-            Phone phone2 = new Phone(40404040, "Hjem");
-            CityInfo ci1 = new CityInfo(4200, "Slagelse");
-            CityInfo ci2 = new CityInfo(2000, "Frederiksberg");
-            Hobby h1 = new Hobby("Bodybuilding", "Bb.dk", "Bodybuilding", "Træning");
-            a1.setCityInfo(ci1);
-            a2.setCityInfo(ci2);
-            p1.setAddress(a1);
-            p1.addHobby(h1);
-            p2.setAddress(a2);
-            p2.addHobby(h1);
-            p1.addPhone(phone1);
-            p2.addPhone(phone2);
-            em.persist(p1);
-            em.persist(p2);
-
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-    }
 
     public static void main(String[] args) throws MissingInputException, PersonNotFoundException {
         emf = EMF_Creator.createEntityManagerFactory();

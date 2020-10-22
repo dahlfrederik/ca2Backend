@@ -59,6 +59,10 @@ public class Person implements Serializable {
     public Address getAddress() {
         return address;
     }
+    
+    public int getZipFromAddress(){
+        return address.getCityInfo().getZip(); 
+    }
 
     public void setAddress(Address address) {
         if (address != null) {

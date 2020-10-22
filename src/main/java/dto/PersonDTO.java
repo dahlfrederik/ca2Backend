@@ -1,6 +1,7 @@
 package dto;
 
 import entities.Person;
+import entities.Phone;
 
 public class PersonDTO {
     private int id;
@@ -8,8 +9,10 @@ public class PersonDTO {
     private String lName;
     private String email;
     private String street;
+    private String city;
     private String hobbyName;
-    private int phoneNumber;
+     
+    private int phoneNumber, zip;
     private String phoneDesc;
 
     public PersonDTO(Person p) {
@@ -17,7 +20,9 @@ public class PersonDTO {
         this.lName = p.getLastName();
         this.email = p.getEmail();
         this.id = p.getId();
+        this.phoneNumber = p.getPhones().get(0).getNumber(); 
         this.street = p.getAddress().getStreet(); 
+        this.zip = p.getZipFromAddress(); 
     }
 
     public PersonDTO(String fn,String ln, String email, String hobbyName, int phoneNumber, String phoneDesc) {
@@ -29,12 +34,23 @@ public class PersonDTO {
         this.phoneDesc = phoneDesc;
     }
 
+    public PersonDTO(String fName, String lName, String email, String street, String hobbyName, int phoneNumber, int zip, String phoneDesc) {
+        this.fName = fName;
+        this.lName = lName;
+        this.email = email;
+        this.street = street;
+        this.hobbyName = hobbyName;
+        this.phoneNumber = phoneNumber;
+        this.zip = zip;
+        this.phoneDesc = phoneDesc;
+    }
+
     public PersonDTO() {}
 
     public int getId() {
         return id;
     }
-
+ 
     public int getPhoneNumber() {
         return phoneNumber;
     }
@@ -96,5 +112,11 @@ public class PersonDTO {
     public void setStreet(String street) {
         this.street = street;
     }
+
+    public int getZip() {
+        return zip;
+    }
+    
+    
 
 }
