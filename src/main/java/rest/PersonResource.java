@@ -2,13 +2,16 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dto.CityInfoDTO;
 import dto.PersonDTO;
 import dto.PersonsDTO;
+import entities.CityInfo;
 import entities.Person;
 import exceptions.MissingInputException;
 import exceptions.PersonNotFoundException;
 import utils.EMF_Creator;
 import facades.PersonFacade;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -23,8 +26,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-//Todo Remove or change relevant parts before ACTUAL use
-@Path("person")
+@Path("persons")
 public class PersonResource {
     private static PersonDTO aPersonDTO = new PersonDTO("Josef", "Marc", "12345678", "Træning", 123, "Hjem"); 
 
@@ -37,18 +39,12 @@ public class PersonResource {
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String demo() {
-        return "{\"msg\":\"Hello World\"}";
-    }
-    
-
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    @Path("persons")
     public String allPersons() {      
             PersonsDTO personsDTO = pf.getAllPersons();
             return GSON.toJson(personsDTO);    
     }
+    
+
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -69,16 +65,24 @@ public class PersonResource {
             return GSON.toJson(hobbyCount);    
     }
     
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("zipcodes")
+    public String allZipcodes() {      
+            List<CityInfoDTO> zipCodes = pf.allZipCodes();
+            return GSON.toJson(zipCodes);
+    }
+    
 //    @GET
 //    @Produces({MediaType.APPLICATION_JSON})
 //    @Consumes({MediaType.APPLICATION_JSON})
-//    @Path("{city}")
-//    public String allPersonsByCity(@PathParam("city") String city) throws PersonNotFoundException {      
+//    @Path("persons/{zipCode}")
+//    public String allPersonsByZipcode(@PathParam("zipCode") int zipCode) throws PersonNotFoundException {      
 //        PersonsDTO personsDTO;
-//        personsDTO = pf.allPersonsByCity(city);
+//        personsDTO = pf.allPersonsByZipcode(zipCode);
 //            return GSON.toJson(personsDTO);    
 //    }
-    
+//    
     
 
 //    @POST

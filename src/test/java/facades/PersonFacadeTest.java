@@ -26,7 +26,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 //Uncomment the line below, to temporarily disable this test
-@Disabled 
+//@Disabled 
+
 public class PersonFacadeTest {
 
     private static EntityManagerFactory emf;
@@ -59,20 +60,23 @@ public class PersonFacadeTest {
         Address a2 = new Address("Frederiksbergvej 1");
         Phone phone1 = new Phone(30303030, "Hjem");
         Phone phone2 = new Phone(40404040, "Hjem");
-        
-       
+        CityInfo ci1 = new CityInfo(4200, "Slagelse");
+        CityInfo ci2 = new CityInfo(2000, "Frederiksberg");
+        Hobby h1 = new Hobby("Bodybuilding", "Bb.dk", "Bodybuilding", "Træning");
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
             
-            em.createNativeQuery("INSERT INTO CITYINFO VALUES ('2000','Frederiksberg');").executeUpdate();
-            em.createNativeQuery("INSERT INTO CITYINFO VALUES ('2100','København Ø');").executeUpdate();
-            em.createNativeQuery("INSERT INTO HOBBY VALUES ('Akrobatik','https://en.wikipedia.org/wiki/Acrobatics','Generel','Indendørs');").executeUpdate(); 
-            em.createNativeQuery("INSERT INTO HOBBY VALUES ('Skuespil','https://en.wikipedia.org/wiki/Acting','Generel','Indendørs');").executeUpdate(); 
-            
+            a1.setCityInfo(ci1);
+            a2.setCityInfo(ci2);
             p1.setAddress(a1);
+            p1.addHobby(h1);
             p2.setAddress(a2);
+            p2.addHobby(h1);
             p1.addPhone(phone1);
             p2.addPhone(phone2);
             em.persist(p1);
@@ -105,10 +109,11 @@ public class PersonFacadeTest {
         int phoneNumber = 12345678; 
         String phoneDesc = "work";
         String street = "Jernbanevej";
-        String hobbyName = "Akrobatik";
+        String city = "Frederiksberg";
+        String hobbyName = "Bodybuilding";
         int zip = 2000; 
         //ZIP is already in DB thats why "2000" is being used. 
-        facade.addPerson(fName, lName, email, phoneNumber, phoneDesc, street, hobbyName, zip);  
+        facade.addPerson(fName, lName, email, phoneNumber, phoneDesc, street, hobbyName,zip);  
         System.out.println("TESTING SIZE AFTER ADD METHOD");
         assertEquals(3, facade.getAllPersons().getAll().size(), "Expects three rows in the database");
     }
@@ -120,7 +125,7 @@ public class PersonFacadeTest {
             facade.deletePerson(id); 
             assertEquals(1, facade.getAllPersons().getAll().size(), "Expects one row in the database");
     }
-    @Disabled
+    
     @Test
     public void testDeletePersonNotFoundException() {
         Exception exception = assertThrows(PersonNotFoundException.class, () -> {
@@ -130,7 +135,7 @@ public class PersonFacadeTest {
     }
     
     
-    @Disabled
+    @Disabled 
     @Test
     public void testEditPerson() throws Exception {
         System.out.println("editPerson");

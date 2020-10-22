@@ -5,11 +5,13 @@
  */
 package facades;
 
+import dto.CityInfoDTO;
 import dto.PersonDTO;
 import dto.PersonsDTO;
 import entities.CityInfo;
 import exceptions.MissingInputException;
 import exceptions.PersonNotFoundException;
+import java.util.List;
 
 /**
  *
@@ -38,7 +40,7 @@ public interface IPersonFacade {
     
     public PersonsDTO allPersonsByZipcode(int zipcode);
     
-    public CityInfo allZipCodes(String cityinfo); 
+    public List<CityInfoDTO> allZipCodes(); 
     
     public long hobbyCount(String hobby);
     
