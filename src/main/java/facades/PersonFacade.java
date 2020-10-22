@@ -1,5 +1,6 @@
 package facades;
 
+import dto.CityInfoDTO;
 import entities.Person;
 import dto.PersonDTO;
 import dto.PersonsDTO;
@@ -169,7 +170,6 @@ public class PersonFacade implements IPersonFacade {
         } finally {
             em.close();
         }
-
     }
 
     @Override
@@ -191,44 +191,43 @@ public class PersonFacade implements IPersonFacade {
 
     @Override
     public PersonsDTO allPersonsByZipcode(int zipcode) {
-//        EntityManager em = getEntityManager();
-//        try {
-//            Query query = em.createNamedQuery("Person.GetCityInfo");
-//            query.setParameter("zip", zipcode);
-//            CityInfo personCityInfo = (CityInfo) query.getSingleResult();
-//            if (zipcode < 0) {
-//                System.out.println("Fejl");
-//            } else {
-//                List<Address> addresses = personCityInfo.getAddressList();
-//                List<Person> personList = new ArrayList();
-//                for (int i = 0; i < addresses.size(); i++) {
-//                    personList.add((Person) personCityInfo.getAddressList().get(i).getPerson());
-//                }
-//                return new PersonsDTO(personList);
-//            }
-//        } finally {
-//            em.close();
-//        }
+        EntityManager em = getEntityManager();
+        try {
+            Query query = em.createNamedQuery("Person.GetCityInfo");
+            query.setParameter("zip", zipcode);
+            CityInfo personCityInfo = (CityInfo) query.getResultList();
+
+            if (zipcode < 0) {
+                System.out.println("Fejl");
+            } else {
+                List<Address> addresses = personCityInfo.getAddressList();
+                List<Person> personList = new ArrayList();
+                for (int i = 0; i < addresses.size(); i++) {
+                    personList.add((Person) personCityInfo.getAddressList().get(i).getPerson());
+                }
+                return new PersonsDTO(personList);
+            }
+        } finally {
+            em.close();
+        }
         return null;
     }
 
     @Override
-    public CityInfo allZipCodes(String cityinfo) {
-        return null;
-//        EntityManager em = getEntityManager();
-//        try {
-//            Query query = em.createNamedQuery("CityInfo.getAllRows");
-//            query.setParameter("c", cityinfo);
-//            CityInfo zipCityinfo = (CityInfo) query.getSingleResult();
-//            if (cityinfo == null) {
-//                System.out.println("Fejl");
-//            } else {
-//                return new CityInfo();
-//            }
-//        } finally {
-//            em.close();
-//        }
-//        return null;
+    public List<CityInfoDTO> allZipCodes() {
+        EntityManager em = getEntityManager();
+        try {
+            List<CityInfo> zipCodes = new ArrayList();
+            zipCodes = em.createQuery("SELECT z FROM CityInfo z").getResultList();
+            
+            List<CityInfoDTO> newList = new ArrayList();
+            for (CityInfo zipCode : zipCodes) {
+                newList.add(new CityInfoDTO(zipCode));
+            }
+            return newList;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
@@ -296,10 +295,10 @@ public class PersonFacade implements IPersonFacade {
         //System.out.println(PersonsWithHobby); 
 
         System.out.println(facade.hobbyCount("Airsoft"));
+        
 
         //System.out.println(facade.allPersonsByHobby(hobby).getAll().get(0).getfName());
         //System.out.println(facade.allPersonsByZipcode(2000).getAll());
-
     }
 
 }
