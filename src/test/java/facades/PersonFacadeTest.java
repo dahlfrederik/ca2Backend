@@ -66,10 +66,10 @@ public class PersonFacadeTest {
             em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
             
-            em.createQuery("INSERT INTO CITYINFO VALUES ('2000','Frederiksberg');").executeUpdate();
-            em.createQuery("INSERT INTO CITYINFO VALUES ('2100','København Ø');").executeUpdate();
-            em.createQuery("INSERT INTO HOBBY VALUES ('Akrobatik','https://en.wikipedia.org/wiki/Acrobatics','Generel','Indendørs');").executeUpdate(); 
-            em.createQuery("INSERT INTO HOBBY VALUES ('Skuespil','https://en.wikipedia.org/wiki/Acting','Generel','Indendørs');").executeUpdate(); 
+            em.createNativeQuery("INSERT INTO CITYINFO VALUES ('2000','Frederiksberg');").executeUpdate();
+            em.createNativeQuery("INSERT INTO CITYINFO VALUES ('2100','København Ø');").executeUpdate();
+            em.createNativeQuery("INSERT INTO HOBBY VALUES ('Akrobatik','https://en.wikipedia.org/wiki/Acrobatics','Generel','Indendørs');").executeUpdate(); 
+            em.createNativeQuery("INSERT INTO HOBBY VALUES ('Skuespil','https://en.wikipedia.org/wiki/Acting','Generel','Indendørs');").executeUpdate(); 
             
             p1.setAddress(a1);
             p2.setAddress(a2);
