@@ -139,13 +139,23 @@ public class PersonFacadeTest {
     }
     
     @Test
-    public void testEditPerson() throws Exception {
+    public void testEditPersonHobby() throws Exception {
         System.out.println("editPerson");
         PersonDTO p = new PersonDTO(p1);
         PersonDTO expResult = new PersonDTO(p1);
-        
         expResult.setHobbyName(h3.getName());
         p.setHobbyName(h3.getName());
+        PersonDTO result = facade.editPerson(p);
+        assertEquals(expResult.getfName(), result.getfName());
+    }
+    
+    @Test
+    public void testEditPersonName() throws Exception {
+        System.out.println("editPerson");
+        PersonDTO p = new PersonDTO(p1);
+        PersonDTO expResult = new PersonDTO(p1);
+        expResult.setfName("Thomas");
+        p.setfName("Thomas");
         PersonDTO result = facade.editPerson(p);
         assertEquals(expResult.getfName(), result.getfName());
     }
@@ -155,7 +165,7 @@ public class PersonFacadeTest {
     public void testEditPersonNotFoundException() {
         Exception exception = assertThrows(PersonNotFoundException.class, () -> {
             PersonDTO p = new PersonDTO(p1);
-            p.setHobbyName(h3.getName());
+        
             p.setId(8);
             facade.editPerson(p);
         });
@@ -166,7 +176,6 @@ public class PersonFacadeTest {
         Exception exception = assertThrows(MissingInputException.class, () -> {
             PersonDTO p = new PersonDTO(p1);
             p.setfName("");
-            p.setHobbyName(h3.getName());
             facade.editPerson(p);
            
         });

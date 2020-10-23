@@ -188,6 +188,12 @@ public class PersonFacade implements IPersonFacade {
                     person.setAddress(address);
                     person.addHobby(hobby);
                     person.addPhone(phoneNumberList.get(0));
+                    if(p.getHobbyName().compareTo(hobby.getName()) != 0){
+                        person.addHobby(hobby); 
+                    }
+                    
+                    
+                    
                 } else {
                     person.setFirstName(p.getfName());
                     person.setLastName(p.getlName());
@@ -196,7 +202,9 @@ public class PersonFacade implements IPersonFacade {
                     address.setCityInfo(cityInfoList);
                     person.setAddress(address);
                     person.addPhone(new Phone(p.getPhoneNumber(), p.getPhoneDesc()));
-                    person.addHobby(hobby);
+                    if(p.getHobbyName().compareTo(hobby.getName()) != 0){
+                        person.addHobby(hobby); 
+                    }
                 }
 
             }
