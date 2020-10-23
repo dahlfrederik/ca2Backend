@@ -15,6 +15,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -86,23 +87,23 @@ public class PersonResource {
     }
     
     @DELETE
-    @Path("{id}")
+    @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public String deletePerson(@PathParam("id") int id) throws PersonNotFoundException{
         PersonDTO pd = pf.deletePerson(id);
         return "Deleted: " + GSON.toJson(pd);
     }
     
-//    @PUT
-//    @Path("{id}")
-//    @Produces({MediaType.APPLICATION_JSON})
-//    @Consumes({MediaType.APPLICATION_JSON})
-//    public String updatePerson(@PathParam("id") int id,  String person) throws PersonNotFoundException, MissingInputException {
-//        PersonDTO pDTO = GSON.fromJson(person, PersonDTO.class);
-//        pDTO.setId(id); 
-//        PersonDTO pNew = pf.editPerson(pDTO);
-//        return GSON.toJson(pNew);
-//    }   
-//    
+    @PUT
+    @Path("/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public String editPerson(@PathParam("id") int id,  String person) throws PersonNotFoundException, MissingInputException {
+        PersonDTO pDTO = GSON.fromJson(person, PersonDTO.class);
+        pDTO.setId(id); 
+        PersonDTO pNew = pf.editPerson(pDTO);
+        return GSON.toJson(pNew);
+    }   
+    
 
 }

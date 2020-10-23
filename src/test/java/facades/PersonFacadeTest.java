@@ -34,6 +34,7 @@ public class PersonFacadeTest {
     private static PersonFacade facade;
     private static Person p1, p2, p3;
     private static Address a1, a2;
+    private static Hobby h3; 
 
     public PersonFacadeTest() {
     }
@@ -54,7 +55,7 @@ public class PersonFacadeTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        Person p1 = new Person("Thor", "Christensen", "thor@hammer.dk");
+        p1 = new Person("Thor", "Christensen", "thor@hammer.dk");
         Person p2 = new Person("Frederik", "Dahl", "freddy@wong.dk");
         Address a1 = new Address("Tagensvej 154");
         Address a2 = new Address("Frederiksbergvej 1");
@@ -62,7 +63,10 @@ public class PersonFacadeTest {
         Phone phone2 = new Phone(40404040, "Hjem");
         CityInfo ci1 = new CityInfo(4200, "Slagelse");
         CityInfo ci2 = new CityInfo(2000, "Frederiksberg");
+        a1.setCityInfo(ci1);
+        a2.setCityInfo(ci2);
         Hobby h1 = new Hobby("Bodybuilding", "Bb.dk", "Bodybuilding", "Træning");
+        h3 = new Hobby("Træfældning", "træ.dk", "Chop chop", "Udendørs");
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
@@ -71,14 +75,14 @@ public class PersonFacadeTest {
             em.createNamedQuery("Address.deleteAllRows").executeUpdate();
             em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
             
-            a1.setCityInfo(ci1);
-            a2.setCityInfo(ci2);
+           
             p1.setAddress(a1);
             p1.addHobby(h1);
             p2.setAddress(a2);
             p2.addHobby(h1);
             p1.addPhone(phone1);
             p2.addPhone(phone2);
+            em.persist(h3); 
             em.persist(p1);
             em.persist(p2);
 
@@ -134,35 +138,37 @@ public class PersonFacadeTest {
         });
     }
     
-    
-    @Disabled 
     @Test
     public void testEditPerson() throws Exception {
         System.out.println("editPerson");
         PersonDTO p = new PersonDTO(p1);
         PersonDTO expResult = new PersonDTO(p1);
-        expResult.setfName("Thomas");
-        p.setfName("Thomas");
+        
+        expResult.setHobbyName(h3.getName());
+        p.setHobbyName(h3.getName());
         PersonDTO result = facade.editPerson(p);
         assertEquals(expResult.getfName(), result.getfName());
     }
-    @Disabled
+    
+    
     @Test
     public void testEditPersonNotFoundException() {
         Exception exception = assertThrows(PersonNotFoundException.class, () -> {
-            PersonDTO p4DTO = new PersonDTO(p2);
-            p4DTO.setId(8);
-            facade.editPerson(p4DTO);
+            PersonDTO p = new PersonDTO(p1);
+            p.setHobbyName(h3.getName());
+            p.setId(8);
+            facade.editPerson(p);
         });
     }
-    @Disabled
+
     @Test
     public void testEditPersonMissingInput() {
         Exception exception = assertThrows(MissingInputException.class, () -> {
-            PersonDTO p4DTO = new PersonDTO(p2);
-            p4DTO.setfName("");
-            p4DTO.setlName("");
-            facade.editPerson(p4DTO);
+            PersonDTO p = new PersonDTO(p1);
+            p.setfName("");
+            p.setHobbyName(h3.getName());
+            facade.editPerson(p);
+           
         });
     }
 }

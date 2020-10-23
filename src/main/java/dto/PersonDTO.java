@@ -1,7 +1,9 @@
 package dto;
 
+import entities.Hobby;
 import entities.Person;
 import entities.Phone;
+import java.util.List;
 
 public class PersonDTO {
     private int id;
@@ -10,7 +12,8 @@ public class PersonDTO {
     private String email;
     private String street;
     private String city;
-    private String hobbyName;
+    private String hobbyName; 
+    
      
     private int phoneNumber, zip;
     private String phoneDesc;
@@ -22,7 +25,11 @@ public class PersonDTO {
         this.id = p.getId();
         this.phoneNumber = p.getPhones().get(0).getNumber(); 
         this.street = p.getAddress().getStreet(); 
-        this.zip = p.getZipFromAddress(); 
+        this.zip = p.getZipFromAddress();
+        this.city = p.getCityFromCityInfo(); 
+        this.hobbyName = p.getHobbies().get(0).getName(); 
+        this.phoneDesc = p.getPhones().get(0).getDesc(); 
+         
     }
 
     public PersonDTO(String fn,String ln, String email, String hobbyName, int phoneNumber, String phoneDesc) {

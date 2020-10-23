@@ -148,8 +148,15 @@ public class PersonFacade implements IPersonFacade {
 
     @Override
     public PersonDTO editPerson(PersonDTO p) throws PersonNotFoundException, MissingInputException {
-        if ((p.getfName().length() == 0) || (p.getlName().length() == 0) || (p.getEmail().length() == 0) || (p.getStreet().length() == 0)) {
-            throw new MissingInputException("First Name and/or Last Name is missing");
+        if ((p.getfName().length() == 0)
+                || (p.getlName().length() == 0)
+                || (p.getEmail().length() == 0)
+                || (p.getStreet().length() == 0)
+                || (p.getZip() == 0)
+                || (p.getHobbyName().length() == 0)
+                || (p.getPhoneNumber() == 0)
+                || (p.getPhoneDesc().length() == 0)) {
+            throw new MissingInputException("Information is missing, make sure you have filled out all the fields");
         }
         EntityManager em = getEntityManager();
 
@@ -160,10 +167,38 @@ public class PersonFacade implements IPersonFacade {
             if (person == null) {
                 throw new PersonNotFoundException(String.format("Person with id: (%d) not found", p.getId()));
             } else {
-                person.setFirstName(p.getfName());
-                person.setLastName(p.getlName());
-                person.setEmail(p.getEmail());
-                person.getAddress().setStreet(p.getStreet());
+                Query query = em.createNamedQuery("Person.GetAddress");
+                query.setParameter("street", p.getStreet());
+                Query query2 = em.createNamedQuery("Person.GetHobby");
+                query2.setParameter("hobby", p.getHobbyName());
+                Query query3 = em.createNamedQuery("Person.GetPhone");
+                query3.setParameter("phone", p.getPhoneNumber());
+                Query query4 = em.createNamedQuery("Person.GetCityInfo");
+                query4.setParameter("zip", p.getZip());
+                List<Address> addresses = query.getResultList();
+                Hobby hobby = (Hobby) query2.getSingleResult();
+                List<Phone> phoneNumberList = query3.getResultList();
+                CityInfo cityInfoList = (CityInfo) query4.getSingleResult();
+                if (addresses.size() > 0 && hobby == null && phoneNumberList.size() > 0 && cityInfoList == null) {
+                    person.setFirstName(p.getfName());
+                    person.setLastName(p.getlName());
+                    person.setEmail(p.getEmail());
+                    Address address = addresses.get(0);
+                    address.setCityInfo(cityInfoList);
+                    person.setAddress(address);
+                    person.addHobby(hobby);
+                    person.addPhone(phoneNumberList.get(0));
+                } else {
+                    person.setFirstName(p.getfName());
+                    person.setLastName(p.getlName());
+                    person.setEmail(p.getEmail());
+                    Address address = new Address(p.getStreet());
+                    address.setCityInfo(cityInfoList);
+                    person.setAddress(address);
+                    person.addPhone(new Phone(p.getPhoneNumber(), p.getPhoneDesc()));
+                    person.addHobby(hobby);
+                }
+
             }
             em.getTransaction().commit();
             return new PersonDTO(person);
@@ -222,7 +257,7 @@ public class PersonFacade implements IPersonFacade {
         try {
             List<CityInfo> zipCodes = new ArrayList();
             zipCodes = em.createQuery("SELECT z FROM CityInfo z").getResultList();
-            
+
             List<CityInfoDTO> newList = new ArrayList();
             for (CityInfo zipCode : zipCodes) {
                 newList.add(new CityInfoDTO(zipCode));
@@ -244,7 +279,6 @@ public class PersonFacade implements IPersonFacade {
             em.close();
         }
     }
-
 
     public static void main(String[] args) throws MissingInputException, PersonNotFoundException {
         emf = EMF_Creator.createEntityManagerFactory();
@@ -268,10 +302,8 @@ public class PersonFacade implements IPersonFacade {
         //System.out.println(PersonsWithHobby); 
 
         System.out.println(facade.hobbyCount("Airsoft"));
-        
 
         //System.out.println(facade.allPersonsByHobby(hobby).getAll().get(0).getfName());
-        
     }
 
 }
