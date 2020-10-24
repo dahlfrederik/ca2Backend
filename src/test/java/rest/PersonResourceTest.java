@@ -1,6 +1,9 @@
 package rest;
 
 import dto.PersonDTO;
+import dto.PersonsDTO;
+import dto.PhoneDTO;
+import dto.PhonesDTO;
 import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
@@ -12,7 +15,9 @@ import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
+import static io.restassured.path.json.config.JsonParserType.GSON;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -28,6 +33,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import org.junit.jupiter.api.AfterAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -38,10 +44,12 @@ public class PersonResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static Person p1,p2;
-    private static Address a1, a2; 
+    private static PersonFacade facade;
+    private static Person p1, p2;
+    private static Address a1, a2;
     private static Hobby h3;
-    
+    private static Phone phone1; 
+
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
@@ -56,35 +64,35 @@ public class PersonResourceTest {
         //This method must be called before you request the EntityManagerFactory
         EMF_Creator.startREST_TestWithDB();
         emf = EMF_Creator.createEntityManagerFactoryForTest();
-        
+        facade = PersonFacade.getFacadeExample(emf);
         httpServer = startServer();
         //Setup RestAssured
         RestAssured.baseURI = SERVER_URL;
         RestAssured.port = SERVER_PORT;
         RestAssured.defaultParser = Parser.JSON;
     }
-    
+
     @AfterAll
-    public static void closeTestServer(){
+    public static void closeTestServer() {
         //System.in.read();
-         //Don't forget this, if you called its counterpart in @BeforeAll
-         EMF_Creator.endREST_TestWithDB();
-         httpServer.shutdownNow();
+        //Don't forget this, if you called its counterpart in @BeforeAll
+        EMF_Creator.endREST_TestWithDB();
+        httpServer.shutdownNow();
     }
-    
+
     // Setup the DataBase (used by the test-server and this test) in a known state BEFORE EACH TEST
     //TODO -- Make sure to change the EntityClass used below to use YOUR OWN (renamed) Entity class
     @BeforeEach
     public void setUp() {
-       EntityManager em = emf.createEntityManager();
-        p1 = new Person("Thor", "Christensen", "thor@hammer.dk");
-        Person p2 = new Person("Frederik", "Dahl", "freddy@wong.dk");
-        Address a1 = new Address("Tagensvej 154");
+        EntityManager em = emf.createEntityManager();
+        p2 = new Person("Thor", "Christensen", "thor@hammer.dk");
+        p1 = new Person("Frederik", "Dahl", "fd@td.dk");
+        Address a1 = new Address("Tagensvej");
         Address a2 = new Address("Frederiksbergvej 1");
-        Phone phone1 = new Phone(30303030, "Hjem");
+        phone1 = new Phone(20460020, "Hjem");
         Phone phone2 = new Phone(40404040, "Hjem");
-        CityInfo ci1 = new CityInfo(4200, "Slagelse");
-        CityInfo ci2 = new CityInfo(2000, "Frederiksberg");
+        CityInfo ci1 = new CityInfo(2200, "Slagelse");
+        CityInfo ci2 = new CityInfo(4200, "Frederiksberg");
         a1.setCityInfo(ci1);
         a2.setCityInfo(ci2);
         Hobby h1 = new Hobby("Bodybuilding", "Bb.dk", "Bodybuilding", "Træning");
@@ -96,15 +104,14 @@ public class PersonResourceTest {
             em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
             em.createNamedQuery("Address.deleteAllRows").executeUpdate();
             em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
-            
-           
+
             p1.setAddress(a1);
             p1.addHobby(h1);
             p2.setAddress(a2);
             p2.addHobby(h1);
             p1.addPhone(phone1);
             p2.addPhone(phone2);
-            em.persist(h3); 
+            em.persist(h3);
             em.persist(p1);
             em.persist(p2);
 
@@ -113,53 +120,70 @@ public class PersonResourceTest {
             em.close();
         }
     }
-    
+
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
         given().when().get("/persons").then().statusCode(200);
     }
-   
-    @Disabled
+
+    // @Disabled
     @Test
-    public void getAllPersons(){
-            List<PersonDTO> personsDTOs
-        
-             = given()
-                    .contentType(ContentType.JSON)
-                    .when()
-                    .get("/persons/")
-                    .then()
-                    .extract().body().jsonPath().getList("all", PersonDTO.class);
-           
-            PersonDTO p1DTO = new PersonDTO(p1);
-            PersonDTO p2DTO = new PersonDTO(p2);
-            
-            //COULD NOT MAKE THIS WORK, gave an error with different objects. 
-            
-            //assertEquals(personsDTOs, containsInAnyOrder(p1DTO, p2DTO));
-            assertEquals(personsDTOs.size(),2);
+    public void getAllPersons() {
+        List<PersonDTO> personsDTOs
+                = given()
+                        .contentType(ContentType.JSON)
+                        .when()
+                        .get("/persons/")
+                        .then()
+                        .extract().body().jsonPath().getList("all", PersonDTO.class);
+
+        String p1 = "Frederik";
+        String p2 = "Thor";
+
+        List<String> personsDTOnames = new ArrayList();
+        personsDTOnames.add(p1);
+        personsDTOnames.add(p2);
+
+        List<String> resultList = new ArrayList();
+        String res1 = personsDTOs.get(0).getfName();
+        String res2 = personsDTOs.get(1).getfName();
+        resultList.add(res1);
+        resultList.add(res2);
+
+        assertTrue(resultList.contains(p1));
+        assertTrue(resultList.contains(p2));
     }
-    @Disabled
+
+
     @Test
-    public void addPerson(){
-        
-        Address a3 = new Address("Glostrupvej"); 
-        p1.setAddress(a3);
-        PersonDTO pDTO = new PersonDTO(p1); 
+    public void addPerson() {
+       
+        PersonDTO p = new PersonDTO(p1);
+        p.setHobbyName(p1.getHobbies().get(0).getName());
+        p.setPhoneDesc(p1.getPhones().get(0).getDesc());
+        List<Phone> pList = new ArrayList(); 
+        pList.add(phone1); 
+        PhonesDTO pDTO = new PhonesDTO(pList); 
+        p.setPhoneList(pDTO);
+        p.setPhoneNumber(20460020);
         
         given()
                 .contentType(ContentType.JSON)
-                .body(pDTO)
+                .body(p)
                 .when()
-                .post("person")
+                .post("persons")
                 .then()
-                .body("fName", equalTo("Thor"))
-                .body("lName", equalTo("Christensen"))
-                .body("phone", equalTo("45454545"))
+                .body("fName", equalTo("Frederik"))
+                .body("lName", equalTo("Dahl"))
+                .body("email", equalTo("fd@td.dk"))
+                .body("phoneNumber", equalTo(20460020))
+                .body("phoneDesc", equalTo("Hjem"))
+                .body("street", equalTo("Tagensvej"))
+                .body("zip", equalTo(2200))
+                .body("hobbyName", equalTo("Bodybuilding"))
                 .body("id", notNullValue());
     }
     
-   
- 
+
 }

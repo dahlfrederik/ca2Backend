@@ -79,7 +79,7 @@ public class PersonFacade implements IPersonFacade {
         }
         EntityManager em = getEntityManager();
         Person person = new Person(fName, lName, email);
-
+        
         try {
             em.getTransaction().begin();
             Query query = em.createNamedQuery("Person.GetAddress");
@@ -100,19 +100,29 @@ public class PersonFacade implements IPersonFacade {
                 person.setAddress(address);
                 person.addHobby(hobby);
                 person.addPhone(phoneNumberList.get(0));
+                person.getPhones().get(0).setDesc(phoneDesc);
+                person.getPhones().get(0).setNumber(phoneNumber);
+                
             } else {
                 Address address = new Address(street);
                 address.setCityInfo(cityInfoList);
                 person.setAddress(address);
                 person.addPhone(new Phone(phoneNumber, phoneDesc));
                 person.addHobby(hobby);
+                
             }
             em.persist(person);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return new PersonDTO(person);
+            PersonDTO personDTO = new PersonDTO(person);
+            personDTO.setPhoneNumber(phoneNumber);
+            personDTO.setPhoneDesc(phoneDesc); 
+            personDTO.setHobbyName(hobbyName);
+            
+            
+        return personDTO;
     }
 
     @Override
