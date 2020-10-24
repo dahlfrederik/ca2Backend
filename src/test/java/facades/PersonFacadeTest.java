@@ -49,7 +49,7 @@ public class PersonFacadeTest {
     public static void tearDownClass() {
 //        Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
     }
-
+ 
     // Setup the DataBase in a known state BEFORE EACH TEST
     //TODO -- Make sure to change the script below to use YOUR OWN entity class
     @BeforeEach
@@ -160,13 +160,15 @@ public class PersonFacadeTest {
         assertEquals(expResult.getfName(), result.getfName());
     }
     
+//    fname, lname, email, street, zip, hobbyname, phonenumber, phonedesc
+
     
     @Test
     public void testEditPersonNotFoundException() {
         Exception exception = assertThrows(PersonNotFoundException.class, () -> {
             PersonDTO p = new PersonDTO(p1);
         
-            p.setId(8);
+            p.setId(12);
             facade.editPerson(p);
         });
     }

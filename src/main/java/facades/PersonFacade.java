@@ -176,24 +176,26 @@ public class PersonFacade implements IPersonFacade {
                 Query query4 = em.createNamedQuery("Person.GetCityInfo");
                 query4.setParameter("zip", p.getZip());
                 List<Address> addresses = query.getResultList();
-                Hobby hobby = (Hobby) query2.getSingleResult();
+                List<Hobby> hobbyList = query2.getResultList();
                 List<Phone> phoneNumberList = query3.getResultList();
                 CityInfo cityInfoList = (CityInfo) query4.getSingleResult();
-                if (addresses.size() > 0 && hobby == null && phoneNumberList.size() > 0 && cityInfoList == null) {
+                int latestAddedHobby = hobbyList.size()-1; 
+                if (addresses.size() > 0 && hobbyList.size() > 0 && phoneNumberList.size() > 0 && cityInfoList == null) {
                     person.setFirstName(p.getfName());
                     person.setLastName(p.getlName());
                     person.setEmail(p.getEmail());
                     Address address = addresses.get(0);
                     address.setCityInfo(cityInfoList);
                     person.setAddress(address);
-                    person.addHobby(hobby);
-                    person.addPhone(phoneNumberList.get(0));
-                    if(p.getHobbyName().compareTo(hobby.getName()) != 0){
-                        person.addHobby(hobby); 
+                    person.addPhone(phoneNumberList.get(0));                  
+                   
+                    
+                    if(hobbyList.contains(hobbyList.get(latestAddedHobby))){
+                        System.out.println("The hobby already exist");
+                    } else{
+                        person.addHobby(hobbyList.get(latestAddedHobby));
                     }
-                    
-                    
-                    
+                  
                 } else {
                     person.setFirstName(p.getfName());
                     person.setLastName(p.getlName());
@@ -201,9 +203,10 @@ public class PersonFacade implements IPersonFacade {
                     Address address = new Address(p.getStreet());
                     address.setCityInfo(cityInfoList);
                     person.setAddress(address);
-                    person.addPhone(new Phone(p.getPhoneNumber(), p.getPhoneDesc()));
-                    if(p.getHobbyName().compareTo(hobby.getName()) != 0){
-                        person.addHobby(hobby); 
+                     if(hobbyList.contains(hobbyList.get(latestAddedHobby))){
+                        System.out.println("The hobby already exist");
+                    } else{
+                        person.addHobby(hobbyList.get(latestAddedHobby));
                     }
                 }
 

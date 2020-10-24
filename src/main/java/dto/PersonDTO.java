@@ -3,6 +3,7 @@ package dto;
 import entities.Hobby;
 import entities.Person;
 import entities.Phone;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PersonDTO {
@@ -30,6 +31,9 @@ public class PersonDTO {
         this.city = p.getCityFromCityInfo();
         this.hobbyList = new HobbiesDTO(p.getHobbies()); 
         this.phoneList = new PhonesDTO(p.getPhones()); 
+        this.hobbyName = hobbyList.getAll().get(0).getHobbyName(); 
+        this.phoneDesc = phoneList.getAll().get(0).getDesc(); 
+        this.phoneNumber = phoneList.getAll().get(0).getNumber(); 
     }
 
     public PersonDTO(String fn, String ln, String email, String hobbyName, int phoneNumber, String phoneDesc) {
@@ -59,6 +63,24 @@ public class PersonDTO {
         return id;
     }
 
+    public HobbiesDTO getHobbyList() {
+        return hobbyList;
+    }
+
+    public void setHobbyList(HobbiesDTO hobbyList) {
+        this.hobbyList = hobbyList;
+    }
+
+    public PhonesDTO getPhoneList() {
+        return phoneList;
+    }
+
+    public void setPhoneList(PhonesDTO phoneList) {
+        this.phoneList = phoneList;
+    }
+
+    
+        
     public int getPhoneNumber() {
         return phoneNumber;
     }
