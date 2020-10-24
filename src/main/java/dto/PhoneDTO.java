@@ -20,4 +20,22 @@ public class PhoneDTO {
         this.number = p.getNumber(); 
         this.desc = p.getDesc(); 
     }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+    
+    
 }
