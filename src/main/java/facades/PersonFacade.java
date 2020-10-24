@@ -1,6 +1,7 @@
 package facades;
 
 import dto.CityInfoDTO;
+import dto.HobbiesDTO;
 import entities.Person;
 import dto.PersonDTO;
 import dto.PersonsDTO;
@@ -91,14 +92,14 @@ public class PersonFacade implements IPersonFacade {
             Query query4 = em.createNamedQuery("Person.GetCityInfo");
             query4.setParameter("zip", zip);
             List<Address> addresses = query.getResultList();
-            Hobby hobby = (Hobby) query2.getSingleResult();
+            List<Hobby> hobbyList = query2.getResultList();
             List<Phone> phoneNumberList = query3.getResultList();
             CityInfo cityInfoList = (CityInfo) query4.getSingleResult();
-            if (addresses.size() > 0 && hobby == null && phoneNumberList.size() > 0 && cityInfoList == null) {
+            if (addresses.size() > 0 && hobbyList.size() > 0 && phoneNumberList.size() > 0 && cityInfoList == null) {
                 Address address = addresses.get(0);
                 address.setCityInfo(cityInfoList);
                 person.setAddress(address);
-                person.addHobby(hobby);
+                person.addHobby(hobbyList.get(0));
                 person.addPhone(phoneNumberList.get(0));
                 person.getPhones().get(0).setDesc(phoneDesc);
                 person.getPhones().get(0).setNumber(phoneNumber);
@@ -108,7 +109,7 @@ public class PersonFacade implements IPersonFacade {
                 address.setCityInfo(cityInfoList);
                 person.setAddress(address);
                 person.addPhone(new Phone(phoneNumber, phoneDesc));
-                person.addHobby(hobby);
+                person.addHobby(hobbyList.get(0));
                 
             }
             em.persist(person);
