@@ -35,9 +35,7 @@ public interface IPersonFacade {
     public PersonsDTO getAllPersons();
 
     public PersonDTO editPerson(PersonDTO p) throws PersonNotFoundException, MissingInputException;
-    
-    public PersonsDTO allPersonsByHobby(String hobby) throws PersonNotFoundException; 
-    
+       
     public PersonsDTO allPersonsByZipcode(int zipcode);
     
     public List<CityInfoDTO> allZipCodes(); 

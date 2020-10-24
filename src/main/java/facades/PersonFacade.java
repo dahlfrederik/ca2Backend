@@ -280,7 +280,6 @@ public class PersonFacade implements IPersonFacade {
 
         String hobby = "Airsoft";
 
-        System.out.println(facade.allPersonsByHobby("Akrobatik"));
 
         //System.out.println(facade.allPersonsByHobby(hobby).getAll().get(0).getfName());
     }

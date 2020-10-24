@@ -36,17 +36,7 @@ public class PersonResource {
             PersonsDTO personsDTO = pf.getAllPersons();
             return GSON.toJson(personsDTO);    
     }
-    
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Path("{hobby}")
-    public String allPersonsByHobby(@PathParam("hobby") String hobby) throws PersonNotFoundException {      
-        PersonsDTO personsDTO;
-        personsDTO = pf.allPersonsByHobby(hobby);
-            return GSON.toJson(personsDTO);    
-    }
-    
+       
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
