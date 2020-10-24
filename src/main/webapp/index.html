@@ -20,7 +20,7 @@
                   <li><a href="https://travis-ci.org/github/dahlfrederik/ca2Backend">Travis</a></li>
               </ul>
           </nav>
-          <a class="cta" href="#"><button>SPA Page</button></a>
+          <a class="cta" href="https://dachma-ca2.surge.sh"><button>SPA Page</button></a>
       </header>
 
     <div class="container-fluid padding">
@@ -77,9 +77,9 @@
                           </tr>
                           <tr>
                               <th>GET</th>
-                              <td>/api/citys</td>
+                              <td>/api/zipcodes</td>
                               <td>-</td>
-                              <td>[city, city ..] (1)</td>
+                              <td>[city, city ..] (2)</td>
                               <td>-</td>
                           </tr>
                           <tr>
@@ -122,8 +122,17 @@
                       "lastName": String,<br> 
                       "email": String,<br> 
                       "street": String,<br>
+                      "city" : String,<br>
                       "hobbyName": String,<br>
                       "phoneNumber": Number,<br>
+                      "zip" : Number,<br>
+                      "phoneDesc" : String<br>
+                     }<br>
+                  </p>
+                      <p> City Format(2)<br>
+                      { <br>
+                      "zip": Number,<br>
+                      "city": String,<br>
                      }<br>
                   </p>
               </div>
