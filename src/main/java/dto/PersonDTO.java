@@ -14,6 +14,8 @@ public class PersonDTO {
     private String street;
     private String city;
     private String hobbyName;
+    private HobbiesDTO hobbyList; 
+    private PhonesDTO phoneList; 
 
     private int phoneNumber, zip;
     private String phoneDesc;
@@ -22,18 +24,12 @@ public class PersonDTO {
         this.fName = p.getFirstName();
         this.lName = p.getLastName();
         this.email = p.getEmail();
-        this.id = p.getId();
-        this.phoneNumber = p.getPhones().get(0).getNumber();
+        this.id = p.getId();        
         this.street = p.getAddress().getStreet();
         this.zip = p.getZipFromAddress();
         this.city = p.getCityFromCityInfo();
-        if (p.getHobbies().get(0).getName() != null) {
-            this.hobbyName = p.getHobbies().get(0).getName();
-        }
-        if (p.getPhones().get(0).getDesc() != null){
-            this.phoneDesc = p.getPhones().get(0).getDesc();
-        }
-
+        this.hobbyList = new HobbiesDTO(p.getHobbies()); 
+        this.phoneList = new PhonesDTO(p.getPhones()); 
     }
 
     public PersonDTO(String fn, String ln, String email, String hobbyName, int phoneNumber, String phoneDesc) {
