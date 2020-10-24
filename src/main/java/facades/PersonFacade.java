@@ -200,7 +200,7 @@ public class PersonFacade implements IPersonFacade {
                     person.setFirstName(p.getfName());
                     person.setLastName(p.getlName());
                     person.setEmail(p.getEmail());
-                    Address address = new Address(p.getStreet());
+                    Address address = new Address(p.getStreet());   
                     address.setCityInfo(cityInfoList);
                     person.setAddress(address);
                      if(hobbyList.contains(hobbyList.get(latestAddedHobby))){
@@ -222,6 +222,7 @@ public class PersonFacade implements IPersonFacade {
     @Override
     public PersonsDTO allPersonsByZipcode(int zipcode) {
         EntityManager em = getEntityManager();
+        List<Person> persons = new ArrayList();
         try {
             Query query = em.createNamedQuery("Person.GetCityInfo");
             query.setParameter("zip", zipcode);
@@ -231,19 +232,19 @@ public class PersonFacade implements IPersonFacade {
                 System.out.println("Fejl");
             } else {
                 List<Address> addresses = new ArrayList();
-                List<Person> persons = new ArrayList();
+                
                 for (CityInfo cityInfo : personCityInfo) {
                     addresses = cityInfo.getAddressList();
                     for (Address addresse : addresses) {
                         persons = addresse.getPerson();
                     }
                 }
-                return new PersonsDTO(persons);
+                
             }
         } finally {
             em.close();
         }
-        return null;
+        return new PersonsDTO(persons);
     }
 
     @Override
@@ -279,8 +280,11 @@ public class PersonFacade implements IPersonFacade {
         emf = EMF_Creator.createEntityManagerFactory();
         PersonFacade facade = PersonFacade.getFacadeExample(emf);
         EntityManager em = emf.createEntityManager();
-
-        String hobby = "Airsoft";
+        
+        List<PersonDTO> p = facade.allPersonsByZipcode(4200).getAll();  
+        
+        
+        System.out.println(p);
 
 
         //System.out.println(facade.allPersonsByHobby(hobby).getAll().get(0).getfName());

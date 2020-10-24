@@ -2,7 +2,10 @@ package rest;
 
 import dto.PersonDTO;
 import entities.Address;
+import entities.CityInfo;
+import entities.Hobby;
 import entities.Person;
+import entities.Phone;
 import facades.PersonFacade;
 import utils.EMF_Creator;
 import io.restassured.RestAssured;
@@ -30,13 +33,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 //Uncomment the line below, to temporarily disable this test
-@Disabled
+
 public class PersonResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
     private static Person p1,p2;
     private static Address a1, a2; 
+    private static Hobby h3;
     
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -72,23 +76,40 @@ public class PersonResourceTest {
     //TODO -- Make sure to change the EntityClass used below to use YOUR OWN (renamed) Entity class
     @BeforeEach
     public void setUp() {
-        EntityManager em = emf.createEntityManager();
-        //Person(String firstName, String lastName, String phone, Date created, Date lastEdited) 
-        p1 = new Person("Thor","Christensen", "45454545");
-        p2 = new Person("Frederik","Dahl", "30303030");
-        a1 = new Address("Tagensvej 154"); 
-        a2 = new Address("Frederiksbergvej 1"); 
-        p1.setAddress(a1);
-        p2.setAddress(a2);
-        
+       EntityManager em = emf.createEntityManager();
+        p1 = new Person("Thor", "Christensen", "thor@hammer.dk");
+        Person p2 = new Person("Frederik", "Dahl", "freddy@wong.dk");
+        Address a1 = new Address("Tagensvej 154");
+        Address a2 = new Address("Frederiksbergvej 1");
+        Phone phone1 = new Phone(30303030, "Hjem");
+        Phone phone2 = new Phone(40404040, "Hjem");
+        CityInfo ci1 = new CityInfo(4200, "Slagelse");
+        CityInfo ci2 = new CityInfo(2000, "Frederiksberg");
+        a1.setCityInfo(ci1);
+        a2.setCityInfo(ci2);
+        Hobby h1 = new Hobby("Bodybuilding", "Bb.dk", "Bodybuilding", "Træning");
+        h3 = new Hobby("Træfældning", "træ.dk", "Chop chop", "Udendørs");
         try {
             em.getTransaction().begin();
+            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
             em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
+            
+           
+            p1.setAddress(a1);
+            p1.addHobby(h1);
+            p2.setAddress(a2);
+            p2.addHobby(h1);
+            p1.addPhone(phone1);
+            p2.addPhone(phone2);
+            em.persist(h3); 
             em.persist(p1);
-            em.persist(p2); 
+            em.persist(p2);
+
             em.getTransaction().commit();
-        } finally { 
+        } finally {
             em.close();
         }
     }
@@ -96,10 +117,10 @@ public class PersonResourceTest {
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
-        given().when().get("/person").then().statusCode(200);
+        given().when().get("/persons").then().statusCode(200);
     }
    
-    
+    @Disabled
     @Test
     public void getAllPersons(){
             List<PersonDTO> personsDTOs
@@ -107,7 +128,7 @@ public class PersonResourceTest {
              = given()
                     .contentType(ContentType.JSON)
                     .when()
-                    .get("/person/all")
+                    .get("/persons/")
                     .then()
                     .extract().body().jsonPath().getList("all", PersonDTO.class);
            
@@ -119,7 +140,7 @@ public class PersonResourceTest {
             //assertEquals(personsDTOs, containsInAnyOrder(p1DTO, p2DTO));
             assertEquals(personsDTOs.size(),2);
     }
-    
+    @Disabled
     @Test
     public void addPerson(){
         

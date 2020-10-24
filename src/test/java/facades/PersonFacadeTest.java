@@ -1,5 +1,6 @@
 package facades;
 
+import dto.CityInfoDTO;
 import dto.PersonDTO;
 import dto.PersonsDTO;
 import entities.Address;
@@ -100,7 +101,7 @@ public class PersonFacadeTest {
     @Test
     public void testGetAllPersons() {
         PersonsDTO result = facade.getAllPersons();
-        assertEquals(2, result.getAll().size(), "Expects two rows in the database");
+        assertEquals(2, result.getAll().size() , "Expects two rows in the database");
     }
 
     @Test
@@ -140,9 +141,11 @@ public class PersonFacadeTest {
     
     @Test
     public void testEditPersonHobby() throws Exception {
+         
         System.out.println("editPerson");
         PersonDTO p = new PersonDTO(p1);
         PersonDTO expResult = new PersonDTO(p1);
+    
         expResult.setHobbyName(h3.getName());
         p.setHobbyName(h3.getName());
         PersonDTO result = facade.editPerson(p);
@@ -159,9 +162,6 @@ public class PersonFacadeTest {
         PersonDTO result = facade.editPerson(p);
         assertEquals(expResult.getfName(), result.getfName());
     }
-    
-//    fname, lname, email, street, zip, hobbyname, phonenumber, phonedesc
-
     
     @Test
     public void testEditPersonNotFoundException() {
@@ -182,4 +182,18 @@ public class PersonFacadeTest {
            
         });
     }
+    
+    @Test
+    public void testAllZipCodes(){
+        List<CityInfoDTO> result = facade.allZipCodes();
+        assertEquals(2, result.size(), "Expects two rows in the database");
+    }
+    
+    @Test
+    public void testGetHobbyCount(){
+        long result = facade.hobbyCount("Bodybuilding"); 
+        long expected = 1; 
+        assertEquals(result, expected); 
+    }
+    
 }

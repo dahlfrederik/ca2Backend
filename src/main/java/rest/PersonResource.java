@@ -40,7 +40,7 @@ public class PersonResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    @Path("persons/{hobbyName}")
+    @Path("count/{hobbyName}")
     public String hobbyCount(@PathParam("hobbyName") String hobby) throws PersonNotFoundException {      
         long hobbyCount = pf.hobbyCount(hobby);
             return GSON.toJson(hobbyCount);    
