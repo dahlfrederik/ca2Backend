@@ -6,15 +6,15 @@ import entities.Phone;
 import java.util.List;
 
 public class PersonDTO {
+
     private int id;
     private String fName;
     private String lName;
     private String email;
     private String street;
     private String city;
-    private String hobbyName; 
-    
-     
+    private String hobbyName;
+
     private int phoneNumber, zip;
     private String phoneDesc;
 
@@ -23,16 +23,20 @@ public class PersonDTO {
         this.lName = p.getLastName();
         this.email = p.getEmail();
         this.id = p.getId();
-        this.phoneNumber = p.getPhones().get(0).getNumber(); 
-        this.street = p.getAddress().getStreet(); 
+        this.phoneNumber = p.getPhones().get(0).getNumber();
+        this.street = p.getAddress().getStreet();
         this.zip = p.getZipFromAddress();
-        this.city = p.getCityFromCityInfo(); 
-        this.hobbyName = p.getHobbies().get(0).getName(); 
-        this.phoneDesc = p.getPhones().get(0).getDesc(); 
-         
+        this.city = p.getCityFromCityInfo();
+        if (p.getHobbies().get(0).getName() != null) {
+            this.hobbyName = p.getHobbies().get(0).getName();
+        }
+        if (p.getPhones().get(0).getDesc() != null){
+            this.phoneDesc = p.getPhones().get(0).getDesc();
+        }
+
     }
 
-    public PersonDTO(String fn,String ln, String email, String hobbyName, int phoneNumber, String phoneDesc) {
+    public PersonDTO(String fn, String ln, String email, String hobbyName, int phoneNumber, String phoneDesc) {
         this.fName = fn;
         this.lName = ln;
         this.email = email;
@@ -52,12 +56,13 @@ public class PersonDTO {
         this.phoneDesc = phoneDesc;
     }
 
-    public PersonDTO() {}
+    public PersonDTO() {
+    }
 
     public int getId() {
         return id;
     }
- 
+
     public int getPhoneNumber() {
         return phoneNumber;
     }
@@ -73,8 +78,6 @@ public class PersonDTO {
     public void setPhoneDesc(String phoneDesc) {
         this.phoneDesc = phoneDesc;
     }
-    
-    
 
     public String getHobbyName() {
         return hobbyName;
@@ -83,7 +86,7 @@ public class PersonDTO {
     public void setHobbyName(String hobbyName) {
         this.hobbyName = hobbyName;
     }
-    
+
     public String getfName() {
         return fName;
     }
@@ -123,7 +126,5 @@ public class PersonDTO {
     public int getZip() {
         return zip;
     }
-    
-    
 
 }

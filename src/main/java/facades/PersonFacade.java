@@ -1,6 +1,7 @@
 package facades;
 
 import dto.CityInfoDTO;
+import dto.HobbyDTO;
 import entities.Person;
 import dto.PersonDTO;
 import dto.PersonsDTO;
@@ -215,22 +216,6 @@ public class PersonFacade implements IPersonFacade {
         }
     }
 
-    @Override
-    public PersonsDTO allPersonsByHobby(String hobby) throws PersonNotFoundException {
-        EntityManager em = getEntityManager();
-        try {
-            Query query = em.createNamedQuery("Person.GetHobby");
-            query.setParameter("hobby", hobby);
-            Hobby personHobby = (Hobby) query.getSingleResult();
-            if (personHobby == null) {
-                throw new PersonNotFoundException(String.format("Persons with hobby: (%d) not found", hobby));
-            } else {
-                return new PersonsDTO(personHobby.getPersons());
-            }
-        } finally {
-            em.close();
-        }
-    }
 
     @Override
     public PersonsDTO allPersonsByZipcode(int zipcode) {
@@ -292,24 +277,10 @@ public class PersonFacade implements IPersonFacade {
         emf = EMF_Creator.createEntityManagerFactory();
         PersonFacade facade = PersonFacade.getFacadeExample(emf);
         EntityManager em = emf.createEntityManager();
-        //facade.populateDB();
-        String fName = "Josef";
-        String lName = "Marc";
-        String email = "josef@glostrup.dk";
-        int phoneNumber = 12345678;
-        String phoneDesc = "work";
-        String street = "Jernbanevej";
-        String city = "Glostrup";
-        String hobbyName = "Airsoft";
-        //ZIP is already in DB thats why "2000" is being used. 
-        facade.addPerson(fName, lName, email, phoneNumber, phoneDesc, street, hobbyName, 2000);
 
         String hobby = "Airsoft";
 
-        System.out.println("-----------------TESTER HER ------------------------");
-        //System.out.println(PersonsWithHobby); 
-
-        System.out.println(facade.hobbyCount("Airsoft"));
+        System.out.println(facade.allPersonsByHobby("Akrobatik"));
 
         //System.out.println(facade.allPersonsByHobby(hobby).getAll().get(0).getfName());
     }
