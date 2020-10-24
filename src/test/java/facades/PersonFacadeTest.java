@@ -63,7 +63,7 @@ public class PersonFacadeTest {
         Phone phone1 = new Phone(30303030, "Hjem");
         Phone phone2 = new Phone(40404040, "Hjem");
         CityInfo ci1 = new CityInfo(4200, "Slagelse");
-        CityInfo ci2 = new CityInfo(2000, "Frederiksberg");
+        CityInfo ci2 = new CityInfo(2000, "Frederiksberg");       
         a1.setCityInfo(ci1);
         a2.setCityInfo(ci2);
         Hobby h1 = new Hobby("Bodybuilding", "Bb.dk", "Bodybuilding", "Træning");
@@ -144,8 +144,11 @@ public class PersonFacadeTest {
          
         System.out.println("editPerson");
         PersonDTO p = new PersonDTO(p1);
+        p.setHobbyName(p1.getHobbies().get(0).getName());
+        p.setPhoneDesc(p1.getPhones().get(0).getDesc());
+        p.setPhoneNumber(p1.getPhones().get(0).getNumber());
         PersonDTO expResult = new PersonDTO(p1);
-    
+        
         expResult.setHobbyName(h3.getName());
         p.setHobbyName(h3.getName());
         PersonDTO result = facade.editPerson(p);
@@ -156,6 +159,9 @@ public class PersonFacadeTest {
     public void testEditPersonName() throws Exception {
         System.out.println("editPerson");
         PersonDTO p = new PersonDTO(p1);
+        p.setHobbyName(p1.getHobbies().get(0).getName());
+        p.setPhoneDesc(p1.getPhones().get(0).getDesc());
+        p.setPhoneNumber(p1.getPhones().get(0).getNumber());
         PersonDTO expResult = new PersonDTO(p1);
         expResult.setfName("Thomas");
         p.setfName("Thomas");
@@ -167,7 +173,9 @@ public class PersonFacadeTest {
     public void testEditPersonNotFoundException() {
         Exception exception = assertThrows(PersonNotFoundException.class, () -> {
             PersonDTO p = new PersonDTO(p1);
-        
+            p.setHobbyName(p1.getHobbies().get(0).getName());
+            p.setPhoneDesc(p1.getPhones().get(0).getDesc());
+            p.setPhoneNumber(p1.getPhones().get(0).getNumber());
             p.setId(12);
             facade.editPerson(p);
         });
