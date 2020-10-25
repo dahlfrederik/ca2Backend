@@ -274,6 +274,16 @@ public class PersonFacade implements IPersonFacade {
             em.close();
         }
     }
+    
+    @Override
+    public HobbiesDTO getAllHobbies() {
+        EntityManager em = getEntityManager();
+        try {
+            return new HobbiesDTO(em.createNamedQuery("Hobby.getAllRows").getResultList());
+        } finally {
+            em.close();
+        }
+    }
 
     @Override
     public long hobbyCount(String hobby) {

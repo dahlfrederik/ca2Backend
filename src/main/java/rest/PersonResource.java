@@ -3,6 +3,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.CityInfoDTO;
+import dto.HobbiesDTO;
 import dto.PersonDTO;
 import dto.PersonsDTO;
 import exceptions.MissingInputException;
@@ -53,6 +54,14 @@ public class PersonResource {
     public String allZipcodes() {      
             ArrayList<CityInfoDTO> zipCodes = pf.allZipCodes();
             return GSON.toJson(zipCodes);
+    }
+    
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("hobbies")
+    public String allHobbies() {      
+            HobbiesDTO allHobbies = pf.getAllHobbies();
+            return GSON.toJson(allHobbies);
     }
   
 //    @GET
