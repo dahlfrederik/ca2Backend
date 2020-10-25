@@ -6,7 +6,6 @@
 package facades;
 
 import dto.CityInfoDTO;
-import dto.HobbiesDTO;
 import dto.PersonDTO;
 import dto.PersonsDTO;
 import entities.CityInfo;
@@ -32,17 +31,16 @@ public interface IPersonFacade {
     ) throws MissingInputException;
 
     public PersonDTO deletePerson(int id) throws PersonNotFoundException;
-
+ 
     public PersonsDTO getAllPersons();
 
     public PersonDTO editPerson(PersonDTO p) throws PersonNotFoundException, MissingInputException;
-
+       
     public PersonsDTO allPersonsByZipcode(int zipcode);
-
-    public List<CityInfoDTO> allZipCodes();
-
+    
+    public List<CityInfoDTO> allZipCodes(); 
+    
     public long hobbyCount(String hobby);
-
-    public HobbiesDTO getAllHobbies();
-
+    
+    
 }
