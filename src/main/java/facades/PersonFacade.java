@@ -259,13 +259,13 @@ public class PersonFacade implements IPersonFacade {
     }
 
     @Override
-    public List<CityInfoDTO> allZipCodes() {
+    public ArrayList<CityInfoDTO> allZipCodes() {
         EntityManager em = getEntityManager();
         try {
             List<CityInfo> zipCodes = new ArrayList();
             zipCodes = em.createQuery("SELECT z FROM CityInfo z").getResultList();
 
-            List<CityInfoDTO> newList = new ArrayList();
+            ArrayList<CityInfoDTO> newList = new ArrayList();
             for (CityInfo zipCode : zipCodes) {
                 newList.add(new CityInfoDTO(zipCode));
             }

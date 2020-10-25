@@ -9,6 +9,7 @@ import exceptions.MissingInputException;
 import exceptions.PersonNotFoundException;
 import utils.EMF_Creator;
 import facades.PersonFacade;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
@@ -50,10 +51,10 @@ public class PersonResource {
     @Produces({MediaType.APPLICATION_JSON})
     @Path("zipcodes")
     public String allZipcodes() {      
-            List<CityInfoDTO> zipCodes = pf.allZipCodes();
+            ArrayList<CityInfoDTO> zipCodes = pf.allZipCodes();
             return GSON.toJson(zipCodes);
     }
-    
+  
 //    @GET
 //    @Produces({MediaType.APPLICATION_JSON})
 //    @Consumes({MediaType.APPLICATION_JSON})
