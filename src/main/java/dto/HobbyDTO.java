@@ -21,6 +21,13 @@ public class HobbyDTO {
         this.wikiLink = h.getWikiLink(); 
     }
 
+    public HobbyDTO(String hobbyName, String wikiLink) {
+        this.hobbyName = hobbyName;
+        this.wikiLink = wikiLink;
+    }
+    
+    
+
     public String getHobbyName() {
         return hobbyName;
     }

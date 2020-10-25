@@ -2,6 +2,7 @@ package facades;
 
 import dto.CityInfoDTO;
 import dto.HobbiesDTO;
+import dto.HobbyDTO;
 import entities.Person;
 import dto.PersonDTO;
 import dto.PersonsDTO;
@@ -109,6 +110,7 @@ public class PersonFacade implements IPersonFacade {
                 address.setCityInfo(cityInfoList);
                 person.setAddress(address);
                 person.addPhone(new Phone(phoneNumber, phoneDesc));
+                HobbyDTO hobby = new HobbyDTO(hobbyName, "No-link-found"); 
                 person.addHobby(hobbyList.get(0));
                 
             }
