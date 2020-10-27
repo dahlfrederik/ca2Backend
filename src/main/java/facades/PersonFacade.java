@@ -200,7 +200,7 @@ public class PersonFacade implements IPersonFacade {
                     Address address = addresses.get(0);
                     address.setCityInfo(cityInfoList);
                     person.setAddress(address);
-                    person.addPhone(phoneNumberList.get(0));                  
+                    person.addPhone(phoneNumberList.get(0));                
                    
                     
                     if(hobbyList.contains(hobbyList.get(latestAddedHobby))){
